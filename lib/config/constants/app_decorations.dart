@@ -7,6 +7,11 @@ abstract class AppDecorations {
     borderRadius: BorderRadius.circular(10),
     // color: AppColors.metalColor.shade10,
   );
+  static BoxShadow defBoxShadow = BoxShadow(
+    color: AppColors.shadowColor,
+    blurRadius: 10,
+    offset: const Offset(0, 4),
+  );
 
   static ButtonStyle buttonStyle({
     double? borderRadius,
@@ -22,11 +27,10 @@ abstract class AppDecorations {
           side: border ?? BorderSide.none,
         ),
       ),
-      fixedSize:MaterialStatePropertyAll(size),
+      fixedSize: MaterialStatePropertyAll(size),
       backgroundColor: MaterialStateProperty.all(bgColor ?? AppColors.white),
       overlayColor: MaterialStateProperty.all(AppColors.black.withOpacity(.2)),
       padding: MaterialStateProperty.all(padding),
-      
     );
   }
 }

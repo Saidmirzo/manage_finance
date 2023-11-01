@@ -5,8 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/config/constants/assets.dart';
+import 'package:manage_finance/features/add_pupil/pages/add_pupil_page.dart';
+import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
 import 'package:manage_finance/features/home/pages/home_page.dart';
-import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
+import 'package:manage_finance/features/teachers/pages/teachers_page.dart';
+import 'package:manage_finance/features/teachers/widgets/add_teacher_bottom_sheet.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -36,15 +39,23 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: AppColors.bgColor,
         body: PageView(
           controller: pageController,
-          children: [
+          children: const [
             HomePage(),
-            HomePage(),
-            HomePage(),
+            AddPupilPage(),
+            TeachersPage(),
             HomePage(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return const AddTeacherBottomSheet();
+              },
+            );
+          },
           backgroundColor: AppColors.black,
           shape: const CircleBorder(),
           child: SvgPicture.asset(Assets.icons.add),
@@ -115,3 +126,5 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+
