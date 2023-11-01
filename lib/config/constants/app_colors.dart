@@ -5,6 +5,11 @@ abstract class AppColors {
 
   static const Color primaryColor = Color(0xff6FBE5A);
   static const Color bgColor = Color(0xffF8F8FB);
+  static const Color cardColor = Color(0xffEBF1FE);
+  static const Color progressColor = Color(0xffB1D192);
+  static const Color textColor = Color(0xff031D44);
+  static const Color grey = Color(0xffB09D9D);
+  static const Color actievColor = Color(0xffDFFFDE);
 
   static const Color unActText = Color(0xff94A1C5);
   static const Color green = Color(0xff34B529);

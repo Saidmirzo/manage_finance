@@ -43,6 +43,12 @@ class _MainPageState extends State<MainPage> {
             HomePage(),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: AppColors.black,
+          shape: const CircleBorder(),
+          child: SvgPicture.asset(Assets.icons.add),
+        ),
         bottomNavigationBar: BottomBar(
           backgroundColor: AppColors.white,
           height: 90,

@@ -25,6 +25,8 @@ class _Icons extends _AssetsHolder {
   String get settings => "$basePath/Nevigate.svg";
 
   String get profile => "$basePath/profile.svg";
+
+  String get add => "$basePath/add_ic.svg";
 }
 
 class _Images extends _AssetsHolder {
