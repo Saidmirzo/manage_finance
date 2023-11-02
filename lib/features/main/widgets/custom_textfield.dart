@@ -53,7 +53,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Container(
       width: widget.width,
       height: widget.height ?? 48.h,
-      alignment: Alignment.center,
+      alignment: Alignment.topCenter,
       margin: widget.margin,
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       decoration: BoxDecoration(
@@ -64,44 +64,39 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ? Border.all(color: widget.borderColor!)
             : null,
       ),
-      child: Row(
-        children: [
-          widget.leading ?? const SizedBox.shrink(),
-          SizedBox(width: 8.w),
-          Expanded(
-            child: TextField(
-              obscureText: widget.isPassword == true ? isHide : false,
-              obscuringCharacter: '*',
-              style: AppTextStyles.body18w5,
-              controller: widget.controller,
-              onSubmitted: widget.onSubmitted,
-              onChanged: widget.onChanged,
-              inputFormatters: widget.inputFormatters,
-              keyboardType: widget.textInputType,
-              decoration: InputDecoration(
-                hintText: widget.hintText,
-                hintStyle: widget.hintStyle ??
-                    AppTextStyles.body14w5.copyWith(
-                      color: AppColors.grey,
-                    ),
-                border: InputBorder.none,
-                suffixIcon: widget.isPassword == true
-                    ? IconButton(
-                        icon: Icon(
-                          isHide ? Icons.visibility_off : Icons.visibility,
-                          color: AppColors.black.withOpacity(.25),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isHide = !isHide;
-                          });
-                        },
-                      )
-                    : null,
+      child: TextField(
+        obscureText: widget.isPassword == true ? isHide : false,
+        obscuringCharacter: '*',
+        style: AppTextStyles.body18w5,
+        controller: widget.controller,
+        onSubmitted: widget.onSubmitted,
+        onChanged: widget.onChanged,
+        inputFormatters: widget.inputFormatters,
+        keyboardType: widget.textInputType,
+        cursorColor: AppColors.black,
+        cursorHeight: 25,
+        decoration: InputDecoration(
+          icon: widget.leading,
+          hintText: widget.hintText,
+          hintStyle: widget.hintStyle ??
+              AppTextStyles.body14w5.copyWith(
+                color: AppColors.grey,
               ),
-            ),
-          ),
-        ],
+          border: InputBorder.none,
+          suffixIcon: widget.isPassword == true
+              ? IconButton(
+                  icon: Icon(
+                    isHide ? Icons.visibility_off : Icons.visibility,
+                    color: AppColors.black.withOpacity(.25),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      isHide = !isHide;
+                    });
+                  },
+                )
+              : null,
+        ),
       ),
     );
   }

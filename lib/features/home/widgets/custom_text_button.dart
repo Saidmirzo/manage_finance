@@ -6,20 +6,28 @@ import 'package:manage_finance/config/constants/app_text_styles.dart';
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
-    super.key, required this.text, required this.onTap,
+    super.key,
+    required this.text,
+    required this.onTap,
+    this.padding,
+    this.height,
   });
   final String text;
   final Function() onTap;
+  final double? height;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onTap,
       style: AppDecorations.buttonStyle(
-        borderRadius: 12,
-        size: Size(double.maxFinite, 45.h),
-        bgColor: AppColors.primaryColor,
-      ),
+          borderRadius: 12,
+          size: height != null || padding != null
+              ? const Size.fromWidth(double.maxFinite)
+              : null,
+          bgColor: AppColors.primaryColor,
+          padding: padding),
       child: Text(
         text,
         style: AppTextStyles.body24w5.copyWith(

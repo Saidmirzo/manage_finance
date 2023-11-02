@@ -40,6 +40,7 @@ class HomePage extends StatelessWidget {
         ),
         Expanded(
           child: ListView(
+            shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 18.w),
             children: [
               const ProgressBar(),

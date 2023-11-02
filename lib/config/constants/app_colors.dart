@@ -10,6 +10,8 @@ abstract class AppColors {
   static const Color textColor = Color(0xff031D44);
   static const Color grey = Color(0xffB09D9D);
   static const Color actievColor = Color(0xffDFFFDE);
+  static const Color selectedCardColor = Color(0xffDFFFDE);
+  static const Color inLessonCardColor = Color(0xffFFF7B2);
   static Color blurColor = const Color(0xff494949).withOpacity(.2);
 
   static const Color unActText = Color(0xff94A1C5);

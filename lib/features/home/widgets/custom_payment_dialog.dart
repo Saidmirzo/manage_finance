@@ -59,6 +59,7 @@ class CustomPaymentDialog extends StatelessWidget {
                 ),
                 CustomTextButton(
                   text: 'Saqlash',
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
                   onTap: () {},
                 )
               ],

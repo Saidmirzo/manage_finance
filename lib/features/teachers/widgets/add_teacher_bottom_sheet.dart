@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
 import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/teachers/widgets/custom_bottom_sheet_devider.dart';
 
 class AddTeacherBottomSheet extends StatelessWidget {
   const AddTeacherBottomSheet({
@@ -25,15 +26,7 @@ class AddTeacherBottomSheet extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            height: 5.h,
-            width: 88.w,
-            margin: EdgeInsets.only(top: 12.h, bottom: 28.h),
-            decoration: BoxDecoration(
-              color: AppColors.grey,
-              borderRadius: BorderRadius.circular(30.r),
-            ),
-          ),
+          const CustomBottomSheetDevider(),
           CustomInputWidget(
             title: 'O’qituvchi familiyasi',
             hintText: "Ismini kiriting....",
@@ -58,3 +51,5 @@ class AddTeacherBottomSheet extends StatelessWidget {
     );
   }
 }
+
+
