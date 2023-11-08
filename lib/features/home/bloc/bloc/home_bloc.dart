@@ -20,5 +20,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomeLoadedState(listStudents: response));
       },
     );
+    on<SetPaymentEvent>(
+      (event, emit) async{
+        await dbHelper.setPayment(event.studentModel);
+        add(GetAllStudentsEvent());
+      },
+    );
   }
 }

@@ -80,4 +80,22 @@ class DBHelper {
     }
     return [];
   }
+
+  Future<void> setPayment(StudentModel studentModel) async {
+    try {
+      if (database.isOpen) {
+        database.rawUpdate(
+          '''
+            UPDATE student 
+            SET payment=${studentModel.payment}, 
+              payment_date=${DateTime.now().millisecondsSinceEpoch}, 
+              days=${studentModel.days} 
+            WHERE id==${studentModel.id}''',
+        );
+        
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+  }
 }

@@ -22,7 +22,9 @@ class StudentItemWidget extends StatelessWidget {
           barrierColor: Colors.transparent,
           context: context,
           builder: (context) {
-            return const CustomPaymentDialog();
+            return CustomPaymentDialog(
+              studentModel: studentModel,
+            );
           },
         );
       },
@@ -53,7 +55,10 @@ class StudentItemWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  studentModel.paymentDate ?? "",
+                  DateTime.fromMillisecondsSinceEpoch(
+                          int.parse(studentModel.paymentDate ?? ''))
+                      .minute
+                      .toString(),
                   style: AppTextStyles.body12w5.copyWith(color: AppColors.grey),
                 )
               ],

@@ -1,17 +1,24 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
+import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
+import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
 
 class CustomPaymentDialog extends StatelessWidget {
-  const CustomPaymentDialog({
+  CustomPaymentDialog({
     super.key,
+    required this.studentModel,
   });
+  final StudentModel studentModel;
+  final TextEditingController days = TextEditingController();
+  final TextEditingController payment = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +46,13 @@ class CustomPaymentDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Saidmirza Baxromov',
+                  studentModel.name ?? "Unknown",
                   style: AppTextStyles.body14w4,
                 ),
                 CustomTextField(
                   width: 120.w,
                   height: 30.h,
-                  controller: TextEditingController(),
+                  controller:days,
                   bgColor: AppColors.white,
                   boxShadow: AppDecorations.defBoxShadow,
                   hintText: '30 kun',
@@ -55,15 +62,28 @@ class CustomPaymentDialog extends StatelessWidget {
                 ),
                 CustomTextField(
                   // height: 46.h,
-                  controller: TextEditingController(),
+                  controller:payment,
                   bgColor: AppColors.white,
                   boxShadow: AppDecorations.defBoxShadow,
+                  textInputType: TextInputType.number,
                   hintText: 'To’lov summasi',
                 ),
                 CustomTextButton(
                   text: 'Saqlash',
                   padding: EdgeInsets.symmetric(vertical: 5.h),
-                  onTap: () {},
+                  onTap: () {
+                    context.read<HomeBloc>().add(
+                          SetPaymentEvent(
+                            studentModel: StudentModel(
+                              id: studentModel.id,
+                              days: days.text.isNotEmpty
+                                  ? int.parse(days.text)
+                                  : 30,
+                              payment: int.parse(payment.text.isNotEmpty?payment.text:"0"),
+                            ),
+                          ),
+                        );
+                  },
                 )
               ],
             ),
