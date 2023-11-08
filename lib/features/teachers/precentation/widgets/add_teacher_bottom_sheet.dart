@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
 import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
-import 'package:manage_finance/features/teachers/widgets/custom_bottom_sheet_devider.dart';
+import 'package:manage_finance/features/teachers/precentation/widgets/custom_bottom_sheet_devider.dart';
 
 class AddTeacherBottomSheet extends StatelessWidget {
   const AddTeacherBottomSheet({

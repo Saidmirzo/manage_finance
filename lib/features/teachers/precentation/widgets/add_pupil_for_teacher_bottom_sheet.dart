@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
-import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
-import 'package:manage_finance/core/enums/status_search_pupil.dart';
+import 'package:manage_finance/config/enums/status_search_pupil.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
-import 'package:manage_finance/features/teachers/widgets/custom_bottom_sheet_devider.dart';
-import 'package:manage_finance/features/teachers/widgets/search_pupil_item_widget.dart';
+import 'package:manage_finance/features/teachers/precentation/widgets/custom_bottom_sheet_devider.dart';
+import 'package:manage_finance/features/teachers/precentation/widgets/search_pupil_item_widget.dart';
 
 class AddPupilForTeacherBottomSheet extends StatelessWidget {
   const AddPupilForTeacherBottomSheet({

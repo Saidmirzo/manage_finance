@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/core/extantions/number_extantion.dart';
+import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
-import 'package:manage_finance/features/teachers/pages/teacher_detail.dart';
+import 'package:manage_finance/features/teachers/precentation/pages/teacher_detail.dart';
 
 class TeacherItemWidget extends StatelessWidget {
   const TeacherItemWidget({
-    super.key, required this.teacherModel,
+    super.key,
+    required this.teacherModel,
   });
   final TeacherModel teacherModel;
 
@@ -17,10 +20,13 @@ class TeacherItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context
+            .read<TeacherBloc>()
+            .add(GetTeachersStudents(id: teacherModel.id ?? 1));
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => TeacherDetailPage(),
+            builder: (context) => TeacherDetailPage(teacherModel: teacherModel),
           ),
         );
       },
@@ -38,13 +44,13 @@ class TeacherItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  teacherModel.name??"Unknown",
+                  teacherModel.name ?? "Unknown",
                   style: AppTextStyles.body18w5.copyWith(
                     color: AppColors.textColor,
                   ),
                 ),
                 Text(
-                  teacherModel.subjectName??"",
+                  teacherModel.subjectName ?? "",
                   style: AppTextStyles.body18w5.copyWith(
                     color: AppColors.textColor,
                   ),
@@ -52,7 +58,7 @@ class TeacherItemWidget extends StatelessWidget {
               ],
             ),
             Text(
-              "${teacherModel.payment!.floor().format()}",
+              teacherModel.payment!.floor().format(),
               style: AppTextStyles.body18w5.copyWith(
                 color: AppColors.textColor,
               ),

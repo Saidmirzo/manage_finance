@@ -7,8 +7,8 @@ import 'package:manage_finance/config/constants/assets.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/add_pupil/pages/add_pupil_page.dart';
 import 'package:manage_finance/features/home/pages/home_page.dart';
-import 'package:manage_finance/features/teachers/pages/teachers_page.dart';
-import 'package:manage_finance/features/teachers/widgets/add_teacher_bottom_sheet.dart';
+import 'package:manage_finance/features/teachers/precentation/pages/teachers_page.dart';
+import 'package:manage_finance/features/teachers/precentation/widgets/add_teacher_bottom_sheet.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});

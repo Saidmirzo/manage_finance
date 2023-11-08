@@ -63,6 +63,25 @@ class DBHelper {
     }
     return [];
   }
+  Future<List<StudentModel>> getTeachersStudents({required  int id}) async {
+    try {
+      if (database.isOpen) {
+         final response = await database.rawQuery(
+          '''SELECT * from student 
+              WHERE id in 
+              (SELECT student_id from teacher_student 
+                    WHERE teacher_id==$id)''',
+        );
+        final listTeachers = List<StudentModel>.from(response.map((e) {
+          return StudentModel.fromJson(e);
+        }));
+        return listTeachers;
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+    return [];
+  }
 
   Future<List<StudentModel>> getStudents() async {
     try {

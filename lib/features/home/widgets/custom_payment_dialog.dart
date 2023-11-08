@@ -52,7 +52,7 @@ class CustomPaymentDialog extends StatelessWidget {
                 CustomTextField(
                   width: 120.w,
                   height: 30.h,
-                  controller:days,
+                  controller: days,
                   bgColor: AppColors.white,
                   boxShadow: AppDecorations.defBoxShadow,
                   hintText: '30 kun',
@@ -62,7 +62,7 @@ class CustomPaymentDialog extends StatelessWidget {
                 ),
                 CustomTextField(
                   // height: 46.h,
-                  controller:payment,
+                  controller: payment,
                   bgColor: AppColors.white,
                   boxShadow: AppDecorations.defBoxShadow,
                   textInputType: TextInputType.number,
@@ -79,10 +79,12 @@ class CustomPaymentDialog extends StatelessWidget {
                               days: days.text.isNotEmpty
                                   ? int.parse(days.text)
                                   : 30,
-                              payment: int.parse(payment.text.isNotEmpty?payment.text:"0"),
+                              payment: int.parse(
+                                  payment.text.isNotEmpty ? payment.text : "0"),
                             ),
                           ),
                         );
+                    Navigator.pop(context);
                   },
                 )
               ],

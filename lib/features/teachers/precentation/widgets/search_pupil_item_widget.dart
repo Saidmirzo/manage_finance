@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
-import 'package:manage_finance/core/enums/status_search_pupil.dart';
+import 'package:manage_finance/config/enums/status_search_pupil.dart';
 
 class SearchPupilItemWidget extends StatelessWidget {
   const SearchPupilItemWidget({
