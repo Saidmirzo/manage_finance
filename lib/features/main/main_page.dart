@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/config/constants/assets.dart';
+import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/add_pupil/pages/add_pupil_page.dart';
 import 'package:manage_finance/features/home/pages/home_page.dart';
 import 'package:manage_finance/features/teachers/pages/teachers_page.dart';
@@ -18,10 +19,12 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late final PageController pageController;
+  DBHelper dbHelper = DBHelper();
   int activeIndex = 0;
   @override
   void initState() {
     super.initState();
+    dbHelper.init();
     pageController = PageController();
     pageController.addListener(() {
       setState(() {
@@ -46,6 +49,7 @@ class _MainPageState extends State<MainPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
+            dbHelper.getTEachers();
             showModalBottomSheet(
               isScrollControlled: true,
               context: context,
@@ -124,5 +128,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
-

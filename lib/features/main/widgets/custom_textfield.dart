@@ -76,7 +76,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         cursorColor: AppColors.black,
         cursorHeight: 25,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(1),
           icon: widget.leading,
           hintText: widget.hintText,
           hintStyle: widget.hintStyle ??
@@ -84,7 +84,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 color: AppColors.grey,
               ),
           border: InputBorder.none,
-          focusedBorder: const OutlineInputBorder(),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.white),
+          ),
           suffixIcon: widget.isPassword == true
               ? IconButton(
                   icon: Icon(

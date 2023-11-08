@@ -1,8 +1,9 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:manage_finance/features/home/models/student_model.dart';
+import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -11,7 +12,7 @@ class DBHelper {
 
   late Database database;
 
-  final String databaseName = 'manage_finance.db';
+  final String databaseName = 'manage_fianace.db';
   final int databaseVersion = 1;
   final String tableWordEntity = 'word_entity';
   final String tableWordBank = 'word_bank';
@@ -19,8 +20,8 @@ class DBHelper {
 
   // opens the database (and creates if it do not exist)
   Future<void> init() async {
-    // var databasesPath = await getDatabasesPath();
-    var path = join('assets/', databaseName);
+    var databasesPath = await getDatabasesPath();
+    var path = join(databasesPath, databaseName);
 
     // Check if the database exists
     var exists = await databaseExists(path);
@@ -32,7 +33,7 @@ class DBHelper {
       } catch (_) {}
 
       // Copy from asset
-      ByteData data = await rootBundle.load(join("assets", databaseName));
+      ByteData data = await rootBundle.load(join("assets/db", databaseName));
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
@@ -43,19 +44,40 @@ class DBHelper {
     );
   }
 
-  Future getTEachers (int parentId) async {
+  Future<List<TeacherModel>> getTEachers() async {
     try {
       if (database.isOpen) {
-        final  response = await database.rawQuery("SELECT * FROM $tableSpeakingView WHERE parentId=$parentId");
-        // var speakingViewList = List<CatalogModel>.from(response.map((e) {
-        //   var item = SpeakingViewModel.fromJson(e);
-        //   return CatalogModel(
-        //       id: item.wordId, word: item.word, translate: item.translation, category: item.parentId.toString());
-        // }));
+        final response = await database.rawQuery(
+          '''SELECT teacher.id,teacher.subject_name,  teacher.name ,teacher.fees,
+	            COUNT(student.name)as pupils, sum((student.days/30.0 )*teacher.fees )as payment
+              from ((teacher_student INNER JOIN student on student.id==teacher_student.student_id) 
+              INNER JOIN teacher on teacher.id==teacher_student.teacher_id)''',
+        );
+        final listTeachers = List<TeacherModel>.from(response.map((e) {
+          return TeacherModel.fromJson(e);
+        }));
+        return listTeachers;
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());
     }
-    return null;
+    return [];
+  }
+
+  Future<List<StudentModel>> getStudents() async {
+    try {
+      if (database.isOpen) {
+        final response = await database.rawQuery(
+          '''SELECT * FROM student''',
+        );
+        final listStudents = List<StudentModel>.from(response.map((e) {
+          return StudentModel.fromJson(e);
+        }));
+        return listStudents;
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+    return [];
   }
 }

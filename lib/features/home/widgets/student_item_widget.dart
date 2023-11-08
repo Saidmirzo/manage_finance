@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
+import 'package:manage_finance/core/extantions/number_extantion.dart';
+import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/widgets/custom_payment_dialog.dart';
 
 class StudentItemWidget extends StatelessWidget {
   const StudentItemWidget({
     super.key,
-    required this.isActive,
+    required this.studentModel,
   });
-  final bool isActive;
+  final StudentModel studentModel;
 
   @override
   Widget build(BuildContext context) {
+    final bool isActive = studentModel.payment == 1000000;
     return InkWell(
       onTap: () {
         showDialog(
@@ -44,18 +47,18 @@ class StudentItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Saidmirza Baxromov',
+                  studentModel.name ?? 'Unknown',
                   style: AppTextStyles.body18w5.copyWith(
                     color: AppColors.textColor,
                   ),
                 ),
                 Text(
-                  '12.10.2023  Okt',
+                  studentModel.paymentDate ?? "",
                   style: AppTextStyles.body12w5.copyWith(color: AppColors.grey),
                 )
               ],
             ),
-            Text('700 000 so’m', style: AppTextStyles.body12w5)
+            Text(studentModel.payment!.format(), style: AppTextStyles.body12w5)
           ],
         ),
       ),

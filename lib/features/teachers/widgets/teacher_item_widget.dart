@@ -3,12 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
+import 'package:manage_finance/core/extantions/number_extantion.dart';
+import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:manage_finance/features/teachers/pages/teacher_detail.dart';
 
 class TeacherItemWidget extends StatelessWidget {
   const TeacherItemWidget({
-    super.key,
+    super.key, required this.teacherModel,
   });
+  final TeacherModel teacherModel;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class TeacherItemWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  TeacherDetailPage(),
+            builder: (context) => TeacherDetailPage(),
           ),
         );
       },
@@ -35,13 +38,13 @@ class TeacherItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Oybek domla',
+                  teacherModel.name??"Unknown",
                   style: AppTextStyles.body18w5.copyWith(
                     color: AppColors.textColor,
                   ),
                 ),
                 Text(
-                  'Ona tili',
+                  teacherModel.subjectName??"",
                   style: AppTextStyles.body18w5.copyWith(
                     color: AppColors.textColor,
                   ),
@@ -49,7 +52,7 @@ class TeacherItemWidget extends StatelessWidget {
               ],
             ),
             Text(
-              "5 000 000 so’m",
+              "${teacherModel.payment!.floor().format()}",
               style: AppTextStyles.body18w5.copyWith(
                 color: AppColors.textColor,
               ),

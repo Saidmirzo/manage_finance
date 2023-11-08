@@ -1,10 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
+import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
+import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 Future<void> init() async {
   //!Bloc
-  // sl.registerFactory(() => HomeBloc(homeRepository: sl()));
+  sl.registerFactory(() => HomeBloc(sl()));
+  sl.registerFactory(() => TeacherBloc(sl()));
 
   //---Event
   // sl.registerLazySingleton(() => GetAllCategoriesEvent());

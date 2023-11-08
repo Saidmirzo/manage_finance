@@ -13,10 +13,7 @@ class TeacherDetailPage extends StatelessWidget {
   TeacherDetailPage({super.key});
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   List<Widget> listItems = [
-    const StudentItemWidget(isActive: true),
-    const StudentItemWidget(isActive: true),
-    const StudentItemWidget(isActive: true),
-    const StudentItemWidget(isActive: true),
+    
   ];
 
   @override

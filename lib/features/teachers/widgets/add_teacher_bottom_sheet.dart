@@ -44,7 +44,9 @@ class AddTeacherBottomSheet extends StatelessWidget {
           ),
           CustomTextButton(
             text: 'Qo’shish',
-            onTap: () {},
+            onTap: () {
+              
+            },
           )
         ],
       ),

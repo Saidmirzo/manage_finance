@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
+import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/widgets/custom_app_bar.dart';
 import 'package:manage_finance/features/home/widgets/custom_pop_up_menu_button.dart';
 import 'package:manage_finance/features/home/widgets/progress_bar.dart';
@@ -9,8 +11,19 @@ import 'package:manage_finance/features/home/widgets/student_item_widget.dart';
 import 'package:manage_finance/features/main/widgets/custom_back_button.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(GetAllStudentsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,34 +51,28 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 18.w),
-            children: [
-              const ProgressBar(),
-              Container(
-                height: 30.h,
-                alignment: Alignment.center,
-                child: const TextField(
-                  scrollPadding: EdgeInsets.zero,
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(0),
-                    hintText: 'salom',
-                    focusColor: Colors.transparent,
-
-                    // border: OutlineInputBorder(
-                    //   borderSide: BorderSide(color: Colors.transparent),
-                    // ),
-                    // focusedBorder: OutlineInputBorder(),
-                  ),
+        BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoadedState) {
+              final list = state.listStudents;
+              return Expanded(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(horizontal: 18.w),
+                  children: [
+                    const ProgressBar(),
+                    ...List.generate(
+                      list.length,
+                      (index) => StudentItemWidget(studentModel: list[index]),
+                    ),
+                  ],
                 ),
-              ),
-              ...List.generate(
-                10,
-                (index) => StudentItemWidget(isActive: index == 0),
-              ),
-            ],
-          ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ],
     );
