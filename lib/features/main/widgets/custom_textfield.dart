@@ -53,7 +53,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Container(
       width: widget.width,
       height: widget.height ?? 48.h,
-      alignment: Alignment.topCenter,
+      alignment: Alignment.center,
       margin: widget.margin,
       padding: EdgeInsets.symmetric(horizontal: 15.w),
       decoration: BoxDecoration(
@@ -76,6 +76,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         cursorColor: AppColors.black,
         cursorHeight: 25,
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(0),
           icon: widget.leading,
           hintText: widget.hintText,
           hintStyle: widget.hintStyle ??
@@ -83,6 +84,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 color: AppColors.grey,
               ),
           border: InputBorder.none,
+          focusedBorder: const OutlineInputBorder(),
           suffixIcon: widget.isPassword == true
               ? IconButton(
                   icon: Icon(

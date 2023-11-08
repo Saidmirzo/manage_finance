@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/features/main/main_page.dart';
+import 'injection_container.dart' as sl;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  sl.init();
+
   runApp(const MyApp());
 }
 
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       minTextAdapt: true,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Finance',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

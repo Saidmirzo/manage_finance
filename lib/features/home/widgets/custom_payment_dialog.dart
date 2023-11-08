@@ -49,6 +49,9 @@ class CustomPaymentDialog extends StatelessWidget {
                   bgColor: AppColors.white,
                   boxShadow: AppDecorations.defBoxShadow,
                   hintText: '30 kun',
+                  hintStyle: AppTextStyles.body12w4.copyWith(
+                    color: AppColors.grey,
+                  ),
                 ),
                 CustomTextField(
                   // height: 46.h,

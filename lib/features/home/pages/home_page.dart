@@ -40,10 +40,26 @@ class HomePage extends StatelessWidget {
         ),
         Expanded(
           child: ListView(
-            shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 18.w),
             children: [
               const ProgressBar(),
+              Container(
+                height: 30.h,
+                alignment: Alignment.center,
+                child: const TextField(
+                  scrollPadding: EdgeInsets.zero,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(0),
+                    hintText: 'salom',
+                    focusColor: Colors.transparent,
+
+                    // border: OutlineInputBorder(
+                    //   borderSide: BorderSide(color: Colors.transparent),
+                    // ),
+                    // focusedBorder: OutlineInputBorder(),
+                  ),
+                ),
+              ),
               ...List.generate(
                 10,
                 (index) => StudentItemWidget(isActive: index == 0),
