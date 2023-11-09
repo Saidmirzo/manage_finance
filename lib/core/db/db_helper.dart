@@ -2,7 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
+import 'package:manage_finance/features/teachers/data/models/new_teacher_student_model.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -14,9 +16,9 @@ class DBHelper {
 
   final String databaseName = 'manage_fianace.db';
   final int databaseVersion = 1;
-  final String tableWordEntity = 'word_entity';
-  final String tableWordBank = 'word_bank';
-  final String tableSpeakingView = 'speaking_view';
+  final String tableStudent = 'student';
+  final String tableTeacher = 'teacher';
+  final String tableTeacherStuden = 'teacher_student';
 
   // opens the database (and creates if it do not exist)
   Future<void> init() async {
@@ -44,6 +46,23 @@ class DBHelper {
     );
   }
 
+  Future<List<StudentModel>> getStudents() async {
+    try {
+      if (database.isOpen) {
+        final response = await database.rawQuery(
+          '''SELECT * FROM student''',
+        );
+        final listStudents = List<StudentModel>.from(response.map((e) {
+          return StudentModel.fromJson(e);
+        }));
+        return listStudents;
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+    return [];
+  }
+
   Future<List<TeacherModel>> getTEachers() async {
     try {
       if (database.isOpen) {
@@ -63,10 +82,11 @@ class DBHelper {
     }
     return [];
   }
-  Future<List<StudentModel>> getTeachersStudents({required  int id}) async {
+
+  Future<List<StudentModel>> getTeachersStudents({required int id}) async {
     try {
       if (database.isOpen) {
-         final response = await database.rawQuery(
+        final response = await database.rawQuery(
           '''SELECT * from student 
               WHERE id in 
               (SELECT student_id from teacher_student 
@@ -83,16 +103,36 @@ class DBHelper {
     return [];
   }
 
-  Future<List<StudentModel>> getStudents() async {
+  Future<List<NewStudentModel>> getNewTeachersStudents(
+      {required int id}) async {
     try {
       if (database.isOpen) {
         final response = await database.rawQuery(
-          '''SELECT * FROM student''',
+          '''SELECT id, name ,0 as inLesson FROM student WHERE id NOT in (SELECT student_id from teacher_student WHERE teacher_id==$id)
+              UNION
+              SELECT id, name, 1 as inLesson from student WHERE id in (SELECT student_id from teacher_student WHERE teacher_id==$id)
+              ORDER BY name''',
         );
-        final listStudents = List<StudentModel>.from(response.map((e) {
-          return StudentModel.fromJson(e);
+        final listStudents = List<NewStudentModel>.from(response.map((e) {
+          return NewStudentModel.fromJson(e);
         }));
         return listStudents;
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+    return [];
+  }
+
+  Future<List<NewStudentModel>> addStudentForTeachers(
+      {required int teacherId, required int studentId}) async {
+    try {
+      if (database.isOpen) {
+        await database.insert(tableTeacherStuden, {
+          "student_id": studentId,
+          "teacher_id": teacherId,
+          "date_id": 2,
+        });
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());
@@ -111,7 +151,20 @@ class DBHelper {
               days=${studentModel.days} 
             WHERE id==${studentModel.id}''',
         );
-        
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+  }
+
+  Future<void> addNewStudent(StudentModel studentModel) async {
+    try {
+      if (database.isOpen) {
+        database.insert(
+          tableStudent,
+          studentModel.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());

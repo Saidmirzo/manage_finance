@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
+import 'package:manage_finance/config/enums/bloc_status.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/widgets/custom_app_bar.dart';
 import 'package:manage_finance/features/home/widgets/custom_pop_up_menu_button.dart';
@@ -53,8 +54,8 @@ class _HomePageState extends State<HomePage> {
         ),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            if (state is HomeLoadedState) {
-              final list = state.listStudents;
+            if (state.statusGetAllStudents==BlocStatus.completed) {
+              final list = state.listStudents??[];
               return Expanded(
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 18.w),

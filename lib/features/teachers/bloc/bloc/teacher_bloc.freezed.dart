@@ -18,8 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TeacherState {
   BlocStatus get statusGetTeacher => throw _privateConstructorUsedError;
   BlocStatus get statusTeachersStudents => throw _privateConstructorUsedError;
+  BlocStatus get statusNewTeachersStudents =>
+      throw _privateConstructorUsedError;
   List<TeacherModel>? get listTeachers => throw _privateConstructorUsedError;
   List<StudentModel>? get listStudents => throw _privateConstructorUsedError;
+  List<NewStudentModel>? get listNewStudents =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TeacherStateCopyWith<TeacherState> get copyWith =>
@@ -35,8 +39,10 @@ abstract class $TeacherStateCopyWith<$Res> {
   $Res call(
       {BlocStatus statusGetTeacher,
       BlocStatus statusTeachersStudents,
+      BlocStatus statusNewTeachersStudents,
       List<TeacherModel>? listTeachers,
-      List<StudentModel>? listStudents});
+      List<StudentModel>? listStudents,
+      List<NewStudentModel>? listNewStudents});
 }
 
 /// @nodoc
@@ -54,8 +60,10 @@ class _$TeacherStateCopyWithImpl<$Res, $Val extends TeacherState>
   $Res call({
     Object? statusGetTeacher = null,
     Object? statusTeachersStudents = null,
+    Object? statusNewTeachersStudents = null,
     Object? listTeachers = freezed,
     Object? listStudents = freezed,
+    Object? listNewStudents = freezed,
   }) {
     return _then(_value.copyWith(
       statusGetTeacher: null == statusGetTeacher
@@ -66,6 +74,10 @@ class _$TeacherStateCopyWithImpl<$Res, $Val extends TeacherState>
           ? _value.statusTeachersStudents
           : statusTeachersStudents // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      statusNewTeachersStudents: null == statusNewTeachersStudents
+          ? _value.statusNewTeachersStudents
+          : statusNewTeachersStudents // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listTeachers: freezed == listTeachers
           ? _value.listTeachers
           : listTeachers // ignore: cast_nullable_to_non_nullable
@@ -74,6 +86,10 @@ class _$TeacherStateCopyWithImpl<$Res, $Val extends TeacherState>
           ? _value.listStudents
           : listStudents // ignore: cast_nullable_to_non_nullable
               as List<StudentModel>?,
+      listNewStudents: freezed == listNewStudents
+          ? _value.listNewStudents
+          : listNewStudents // ignore: cast_nullable_to_non_nullable
+              as List<NewStudentModel>?,
     ) as $Val);
   }
 }
@@ -89,8 +105,10 @@ abstract class _$$TeacherStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus statusGetTeacher,
       BlocStatus statusTeachersStudents,
+      BlocStatus statusNewTeachersStudents,
       List<TeacherModel>? listTeachers,
-      List<StudentModel>? listStudents});
+      List<StudentModel>? listStudents,
+      List<NewStudentModel>? listNewStudents});
 }
 
 /// @nodoc
@@ -106,8 +124,10 @@ class __$$TeacherStateImplCopyWithImpl<$Res>
   $Res call({
     Object? statusGetTeacher = null,
     Object? statusTeachersStudents = null,
+    Object? statusNewTeachersStudents = null,
     Object? listTeachers = freezed,
     Object? listStudents = freezed,
+    Object? listNewStudents = freezed,
   }) {
     return _then(_$TeacherStateImpl(
       statusGetTeacher: null == statusGetTeacher
@@ -118,6 +138,10 @@ class __$$TeacherStateImplCopyWithImpl<$Res>
           ? _value.statusTeachersStudents
           : statusTeachersStudents // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      statusNewTeachersStudents: null == statusNewTeachersStudents
+          ? _value.statusNewTeachersStudents
+          : statusNewTeachersStudents // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       listTeachers: freezed == listTeachers
           ? _value._listTeachers
           : listTeachers // ignore: cast_nullable_to_non_nullable
@@ -126,6 +150,10 @@ class __$$TeacherStateImplCopyWithImpl<$Res>
           ? _value._listStudents
           : listStudents // ignore: cast_nullable_to_non_nullable
               as List<StudentModel>?,
+      listNewStudents: freezed == listNewStudents
+          ? _value._listNewStudents
+          : listNewStudents // ignore: cast_nullable_to_non_nullable
+              as List<NewStudentModel>?,
     ));
   }
 }
@@ -136,10 +164,13 @@ class _$TeacherStateImpl extends _TeacherState {
   const _$TeacherStateImpl(
       {this.statusGetTeacher = BlocStatus.notInitialized,
       this.statusTeachersStudents = BlocStatus.notInitialized,
+      this.statusNewTeachersStudents = BlocStatus.notInitialized,
       final List<TeacherModel>? listTeachers,
-      final List<StudentModel>? listStudents})
+      final List<StudentModel>? listStudents,
+      final List<NewStudentModel>? listNewStudents})
       : _listTeachers = listTeachers,
         _listStudents = listStudents,
+        _listNewStudents = listNewStudents,
         super._();
 
   @override
@@ -148,6 +179,9 @@ class _$TeacherStateImpl extends _TeacherState {
   @override
   @JsonKey()
   final BlocStatus statusTeachersStudents;
+  @override
+  @JsonKey()
+  final BlocStatus statusNewTeachersStudents;
   final List<TeacherModel>? _listTeachers;
   @override
   List<TeacherModel>? get listTeachers {
@@ -168,9 +202,19 @@ class _$TeacherStateImpl extends _TeacherState {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<NewStudentModel>? _listNewStudents;
+  @override
+  List<NewStudentModel>? get listNewStudents {
+    final value = _listNewStudents;
+    if (value == null) return null;
+    if (_listNewStudents is EqualUnmodifiableListView) return _listNewStudents;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'TeacherState(statusGetTeacher: $statusGetTeacher, statusTeachersStudents: $statusTeachersStudents, listTeachers: $listTeachers, listStudents: $listStudents)';
+    return 'TeacherState(statusGetTeacher: $statusGetTeacher, statusTeachersStudents: $statusTeachersStudents, statusNewTeachersStudents: $statusNewTeachersStudents, listTeachers: $listTeachers, listStudents: $listStudents, listNewStudents: $listNewStudents)';
   }
 
   @override
@@ -182,10 +226,15 @@ class _$TeacherStateImpl extends _TeacherState {
                 other.statusGetTeacher == statusGetTeacher) &&
             (identical(other.statusTeachersStudents, statusTeachersStudents) ||
                 other.statusTeachersStudents == statusTeachersStudents) &&
+            (identical(other.statusNewTeachersStudents,
+                    statusNewTeachersStudents) ||
+                other.statusNewTeachersStudents == statusNewTeachersStudents) &&
             const DeepCollectionEquality()
                 .equals(other._listTeachers, _listTeachers) &&
             const DeepCollectionEquality()
-                .equals(other._listStudents, _listStudents));
+                .equals(other._listStudents, _listStudents) &&
+            const DeepCollectionEquality()
+                .equals(other._listNewStudents, _listNewStudents));
   }
 
   @override
@@ -193,8 +242,10 @@ class _$TeacherStateImpl extends _TeacherState {
       runtimeType,
       statusGetTeacher,
       statusTeachersStudents,
+      statusNewTeachersStudents,
       const DeepCollectionEquality().hash(_listTeachers),
-      const DeepCollectionEquality().hash(_listStudents));
+      const DeepCollectionEquality().hash(_listStudents),
+      const DeepCollectionEquality().hash(_listNewStudents));
 
   @JsonKey(ignore: true)
   @override
@@ -207,8 +258,10 @@ abstract class _TeacherState extends TeacherState {
   const factory _TeacherState(
       {final BlocStatus statusGetTeacher,
       final BlocStatus statusTeachersStudents,
+      final BlocStatus statusNewTeachersStudents,
       final List<TeacherModel>? listTeachers,
-      final List<StudentModel>? listStudents}) = _$TeacherStateImpl;
+      final List<StudentModel>? listStudents,
+      final List<NewStudentModel>? listNewStudents}) = _$TeacherStateImpl;
   const _TeacherState._() : super._();
 
   @override
@@ -216,9 +269,13 @@ abstract class _TeacherState extends TeacherState {
   @override
   BlocStatus get statusTeachersStudents;
   @override
+  BlocStatus get statusNewTeachersStudents;
+  @override
   List<TeacherModel>? get listTeachers;
   @override
   List<StudentModel>? get listStudents;
+  @override
+  List<NewStudentModel>? get listNewStudents;
   @override
   @JsonKey(ignore: true)
   _$$TeacherStateImplCopyWith<_$TeacherStateImpl> get copyWith =>

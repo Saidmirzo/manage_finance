@@ -12,6 +12,9 @@ class GetAllStudentsEvent extends HomeEvent {}
 class SetPaymentEvent extends HomeEvent {
   final StudentModel studentModel;
   const SetPaymentEvent({required this.studentModel});
-  
+}
 
+class AddNewStudent extends HomeEvent {
+  final StudentModel studentModel;
+  const AddNewStudent({required this.studentModel});
 }

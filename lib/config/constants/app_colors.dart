@@ -13,6 +13,10 @@ abstract class AppColors {
   static const Color selectedCardColor = Color(0xffDFFFDE);
   static const Color inLessonCardColor = Color(0xffFFF7B2);
   static Color blurColor = const Color(0xff494949).withOpacity(.2);
+  static List<Color> gradientColors = [
+    Colors.white.withOpacity(0),
+    const Color(0xffE9E9E9)
+  ];
 
   static const Color unActText = Color(0xff94A1C5);
   static const Color green = Color(0xff34B529);

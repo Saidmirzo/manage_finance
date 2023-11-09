@@ -72,15 +72,15 @@ class TeacherDetailPage extends StatelessWidget {
                 FloatingActionButton(
                   heroTag: "1",
                   onPressed: () {
-                    listKey.currentState?.removeItem(
-                      0,
-                      (_, animation) => FadeOutParticle(
-                        disappear: true,
-                        child: slideIt(context, 0, animation, listItems),
-                      ),
-                      duration: const Duration(milliseconds: 500),
-                    );
-                    listItems.removeAt(0);
+                    // listKey.currentState?.removeItem(
+                    //   0,
+                    //   (_, animation) => FadeOutParticle(
+                    //     disappear: true,
+                    //     child: slideIt(context, 0, animation, listItems),
+                    //   ),
+                    //   duration: const Duration(milliseconds: 500),
+                    // );
+                    // listItems.removeAt(0);
                   },
                   backgroundColor: AppColors.black,
                   shape: const CircleBorder(),
@@ -90,11 +90,16 @@ class TeacherDetailPage extends StatelessWidget {
                 FloatingActionButton(
                   heroTag: "2",
                   onPressed: () {
+                    context
+                        .read<TeacherBloc>()
+                        .add(GetNewTeachersStudents(id: teacherModel.id ?? 1));
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       builder: (context) {
-                        return const AddPupilForTeacherBottomSheet();
+                        return AddPupilForTeacherBottomSheet(
+                          teacherModel: teacherModel,
+                        );
                       },
                     );
                   },

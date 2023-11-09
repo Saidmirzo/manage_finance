@@ -40,11 +40,11 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: AppColors.bgColor,
         body: PageView(
           controller: pageController,
-          children: const [
-            HomePage(),
+          children:  [
+            const HomePage(),
             AddPupilPage(),
-            TeachersPage(),
-            HomePage(),
+            const TeachersPage(),
+            const HomePage(),
           ],
         ),
         floatingActionButton: FloatingActionButton(

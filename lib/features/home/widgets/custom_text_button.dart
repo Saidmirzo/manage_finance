@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
@@ -23,9 +22,9 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onTap,
       style: AppDecorations.buttonStyle(
           borderRadius: 12,
-          size: height != null || padding != null
-              ? const Size.fromWidth(double.maxFinite)
-              : null,
+          size: height != null
+              ? Size(height!, double.maxFinite)
+              : const Size.fromWidth(double.maxFinite),
           bgColor: AppColors.primaryColor,
           padding: padding),
       child: Text(

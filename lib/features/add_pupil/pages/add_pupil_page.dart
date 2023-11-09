@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
+import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
+import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/widgets/custom_app_bar.dart';
 import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
-import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
 
 class AddPupilPage extends StatelessWidget {
-  const AddPupilPage({super.key});
+  AddPupilPage({super.key});
+  final TextEditingController name = TextEditingController();
+  final TextEditingController surName = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,18 +27,39 @@ class AddPupilPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 18.w).copyWith(top: 50.h),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CustomInputWidget(
                 title: 'O’quvchi familiyasi',
                 hintText: 'Familiyani kiriting...',
-                controller: TextEditingController(),
+                controller: surName,
               ),
               CustomInputWidget(
                 title: 'O’quvchi ismi',
                 hintText: 'Ismni kiriting...',
-                controller: TextEditingController(),
+                controller: name,
               ),
+              CustomTextButton(
+                text: "Saqlash",
+                onTap: () {
+                  context.read<HomeBloc>().add(
+                        AddNewStudent(
+                          studentModel: StudentModel(
+                            name: name.text + surName.text,
+                            days: 30,
+                            payment: 0,
+                            paymentDate: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                                dateId: 2
+                          ),
+
+                        ),
+                      );
+                  name.clear();
+                  surName.clear();
+                },
+              )
             ],
           ),
         ),
