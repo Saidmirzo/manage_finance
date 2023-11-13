@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manage_finance/config/enums/bloc_status.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
@@ -40,6 +41,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         await dbHelper.addNewStudent(event.studentModel);
         add(GetAllStudentsEvent());
         emit(state.copyWith(statusSaveNewStudents: BlocStatus.completed));
+      },
+    );
+    on<DeleteStudentEvent>(
+      (event, emit) async {
+        await dbHelper.deleteStudent(event.studentModel);
+        add(GetAllStudentsEvent());
       },
     );
   }

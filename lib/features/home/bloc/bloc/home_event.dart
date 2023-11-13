@@ -18,3 +18,8 @@ class AddNewStudent extends HomeEvent {
   final StudentModel studentModel;
   const AddNewStudent({required this.studentModel});
 }
+
+class DeleteStudentEvent extends HomeEvent {
+  final StudentModel studentModel;
+  const DeleteStudentEvent({required this.studentModel});
+}

@@ -48,12 +48,10 @@ class AddPupilPage extends StatelessWidget {
                             name: name.text + surName.text,
                             days: 30,
                             payment: 0,
-                            paymentDate: DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
-                                dateId: 2
+                            paymentDate: DateTime.now().millisecondsSinceEpoch,
+                            dateId: 2,
+                            addedDate:  DateTime.now().millisecondsSinceEpoch,
                           ),
-
                         ),
                       );
                   name.clear();

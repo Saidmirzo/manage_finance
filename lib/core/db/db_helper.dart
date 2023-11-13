@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/teachers/data/models/new_teacher_student_model.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
@@ -19,6 +18,7 @@ class DBHelper {
   final String tableStudent = 'student';
   final String tableTeacher = 'teacher';
   final String tableTeacherStuden = 'teacher_student';
+  final String tableDeletedStudens = 'deleted_students';
 
   // opens the database (and creates if it do not exist)
   Future<void> init() async {
@@ -165,6 +165,20 @@ class DBHelper {
           studentModel.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+  }
+
+  Future<void> deleteStudent(StudentModel studentModel) async {
+    try {
+      if (database.isOpen) {
+        database.insert(
+          tableDeletedStudens,
+          studentModel.toJson(isDeleted: true),
+        );
+        database.rawDelete("DELETE FROM student WHERE id==${studentModel.id};");
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());

@@ -83,7 +83,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
               AppTextStyles.body14w5.copyWith(
                 color: AppColors.grey,
               ),
-          border: InputBorder.none,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.white),
+          ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AppColors.white),
           ),

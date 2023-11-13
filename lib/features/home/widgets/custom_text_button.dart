@@ -10,11 +10,16 @@ class CustomTextButton extends StatelessWidget {
     required this.onTap,
     this.padding,
     this.height,
+    this.bgColor,
+    this.size, this.textStyle,
   });
   final String text;
   final Function() onTap;
   final double? height;
   final EdgeInsets? padding;
+  final Color? bgColor;
+  final Size? size;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +27,15 @@ class CustomTextButton extends StatelessWidget {
       onPressed: onTap,
       style: AppDecorations.buttonStyle(
           borderRadius: 12,
-          size: height != null
-              ? Size(height!, double.maxFinite)
-              : const Size.fromWidth(double.maxFinite),
-          bgColor: AppColors.primaryColor,
+          size: size ??
+              (height != null
+                  ? Size(height!, double.maxFinite)
+                  : const Size.fromWidth(double.maxFinite)),
+          bgColor: bgColor ?? AppColors.primaryColor,
           padding: padding),
       child: Text(
         text,
-        style: AppTextStyles.body24w5.copyWith(
+        style:textStyle?? AppTextStyles.body24w5.copyWith(
           color: AppColors.white,
         ),
       ),

@@ -2,9 +2,10 @@ class StudentModel {
   int? id;
   String? name;
   int? payment;
-  String? paymentDate;
+  int? paymentDate;
   int? days;
   int? dateId;
+  int? addedDate;
 
   StudentModel(
       {this.id,
@@ -12,7 +13,8 @@ class StudentModel {
       this.payment,
       this.paymentDate,
       this.days,
-      this.dateId});
+      this.dateId,
+      this.addedDate});
 
   StudentModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -21,9 +23,10 @@ class StudentModel {
     paymentDate = json['payment_date'];
     days = json['days'];
     dateId = json['date_id'];
+    addedDate = json['added_date'];
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson({bool? isDeleted}) {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
@@ -31,6 +34,10 @@ class StudentModel {
     data['payment_date'] = this.paymentDate;
     data['days'] = this.days;
     data['date_id'] = this.dateId;
+    data['added_date'] = this.addedDate;
+    if (isDeleted ?? false) {
+      data['deleted_date'] = DateTime.now().millisecondsSinceEpoch;
+    }
     return data;
   }
 }
