@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
+import 'package:manage_finance/features/teachers/data/models/new_teacher_model.dart';
 import 'package:manage_finance/features/teachers/data/models/new_teacher_student_model.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -61,6 +62,21 @@ class DBHelper {
       log("getSpeakingViewList", error: e.toString());
     }
     return [];
+  }
+
+  Future<void> addNewTeacher(
+      {required NewTeacherModel teacherModel}) async {
+    try {
+      if (database.isOpen) {
+         database.insert(
+          tableTeacher,
+          teacherModel.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
   }
 
   Future<List<TeacherModel>> getTEachers() async {
@@ -128,7 +144,7 @@ class DBHelper {
       {required int teacherId, required int studentId}) async {
     try {
       if (database.isOpen) {
-        await database.insert(tableTeacherStuden, {
+         database.insert(tableTeacherStuden, {
           "student_id": studentId,
           "teacher_id": teacherId,
           "date_id": 2,
@@ -174,11 +190,23 @@ class DBHelper {
   Future<void> deleteStudent(StudentModel studentModel) async {
     try {
       if (database.isOpen) {
-        database.insert(
+        await database.insert(
           tableDeletedStudens,
           studentModel.toJson(isDeleted: true),
         );
         database.rawDelete("DELETE FROM student WHERE id==${studentModel.id};");
+        deleteStudentFromTeacher(studentModel);
+      }
+    } catch (e) {
+      log("getSpeakingViewList", error: e.toString());
+    }
+  }
+
+  Future<void> deleteStudentFromTeacher(StudentModel studentModel) async {
+    try {
+      if (database.isOpen) {
+        database.rawDelete(
+            "DELETE from teacher_student WHERE student_id==${studentModel.id};");
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());

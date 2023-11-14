@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/core/extantions/number_extantion.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
-import 'package:manage_finance/features/home/widgets/custom_payment_dialog.dart';
-import 'package:manage_finance/features/home/widgets/delete_dialog_widget.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_payment_dialog.dart';
+import 'package:manage_finance/features/home/presentation/widgets/delete_dialog_widget.dart';
+import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
+import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 
 class StudentItemWidget extends StatelessWidget {
   const StudentItemWidget({
     super.key,
     required this.studentModel,
+    this.teacherModel,
   });
   final StudentModel studentModel;
+  final TeacherModel? teacherModel;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +45,22 @@ class StudentItemWidget extends StatelessWidget {
             builder: (context) {
               return CustomPaymentDialog(studentModel: studentModel);
             },
-          );
+          ).then((value) {
+            if(teacherModel!=null) {
+              context
+                .read<TeacherBloc>()
+                .add(GetTeachersStudents(id: teacherModel!.id!));
+            }
+          });
         },
         onLongPress: () {
           showDialog(
             context: context,
             builder: (context) {
-              return DeleteDialogWidget(studentModel: studentModel);
+              return DeleteDialogWidget(
+                studentModel: studentModel,
+                teacherModel: teacherModel,
+              );
             },
           );
         },

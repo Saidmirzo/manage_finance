@@ -5,6 +5,8 @@ import 'package:manage_finance/config/enums/bloc_status.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
+import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -49,5 +51,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         add(GetAllStudentsEvent());
       },
     );
+    
   }
 }

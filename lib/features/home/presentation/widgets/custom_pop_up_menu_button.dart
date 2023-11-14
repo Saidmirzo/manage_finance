@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
-import 'package:manage_finance/features/home/widgets/custom_check_box.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_check_box.dart';
 
 class CustomPopUpMenuButton extends StatelessWidget {
   const CustomPopUpMenuButton({

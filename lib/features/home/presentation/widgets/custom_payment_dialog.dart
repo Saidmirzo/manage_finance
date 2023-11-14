@@ -8,7 +8,7 @@ import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
-import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
 
 class CustomPaymentDialog extends StatelessWidget {

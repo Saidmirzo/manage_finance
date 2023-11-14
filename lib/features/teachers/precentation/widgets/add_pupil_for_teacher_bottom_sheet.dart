@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/config/enums/bloc_status.dart';
-import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
 import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
@@ -98,6 +98,7 @@ class _AddPupilForTeacherBottomSheetState
                     child: CustomTextButton(
                       text: "Qo'shish",
                       onTap: () {
+                        
                         context.read<TeacherBloc>().add(
                               AddStudentForTeacherEvent(
                                 listStudentIds: selectedItems,

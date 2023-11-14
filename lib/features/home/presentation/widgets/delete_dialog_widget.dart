@@ -5,15 +5,19 @@ import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
-import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
+import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 
 class DeleteDialogWidget extends StatelessWidget {
   const DeleteDialogWidget({
     super.key,
     required this.studentModel,
+    this.teacherModel,
   });
 
   final StudentModel studentModel;
+  final TeacherModel? teacherModel;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +61,20 @@ class DeleteDialogWidget extends StatelessWidget {
                   textStyle:
                       AppTextStyles.body16w5.copyWith(color: AppColors.white),
                   onTap: () {
-                    context.read<HomeBloc>().add(
-                          (DeleteStudentEvent(studentModel: studentModel)),
-                        );
+                    if ( teacherModel != null) {
+                      context
+                          .read<TeacherBloc>()
+                          .add(DeleteStudentFromTeacherEvent(
+                            studentModel: studentModel,
+                            teacherModel: teacherModel!,
+                          ));
+                    } else {
+                      context.read<HomeBloc>().add(
+                            DeleteStudentEvent(studentModel: studentModel),
+                          );
+                    }
+
+                    Navigator.pop(context);
                   },
                 )
               ],

@@ -5,8 +5,8 @@ import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
-import 'package:manage_finance/features/home/widgets/custom_app_bar.dart';
-import 'package:manage_finance/features/home/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_app_bar.dart';
+import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
 
 class AddPupilPage extends StatelessWidget {
   AddPupilPage({super.key});
@@ -42,20 +42,23 @@ class AddPupilPage extends StatelessWidget {
               CustomTextButton(
                 text: "Saqlash",
                 onTap: () {
-                  context.read<HomeBloc>().add(
-                        AddNewStudent(
-                          studentModel: StudentModel(
-                            name: name.text + surName.text,
-                            days: 30,
-                            payment: 0,
-                            paymentDate: DateTime.now().millisecondsSinceEpoch,
-                            dateId: 2,
-                            addedDate:  DateTime.now().millisecondsSinceEpoch,
+                  if (name.text.isNotEmpty && surName.text.isNotEmpty) {
+                    context.read<HomeBloc>().add(
+                          AddNewStudent(
+                            studentModel: StudentModel(
+                              name: name.text + surName.text,
+                              days: 30,
+                              payment: 0,
+                              paymentDate:
+                                  DateTime.now().millisecondsSinceEpoch,
+                              dateId: 2,
+                              addedDate: DateTime.now().millisecondsSinceEpoch,
+                            ),
                           ),
-                        ),
-                      );
-                  name.clear();
-                  surName.clear();
+                        );
+                    name.clear();
+                    surName.clear();
+                  }
                 },
               )
             ],

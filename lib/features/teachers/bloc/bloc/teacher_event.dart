@@ -22,5 +22,20 @@ class GetNewTeachersStudents extends TeacherEvent {
 class AddStudentForTeacherEvent extends TeacherEvent {
   final int teacherId;
   final List<int> listStudentIds;
-  const AddStudentForTeacherEvent({required this.listStudentIds, required this.teacherId});
+  const AddStudentForTeacherEvent(
+      {required this.listStudentIds, required this.teacherId});
+}
+
+class DeleteStudentFromTeacherEvent extends TeacherEvent {
+  final StudentModel studentModel;
+  final TeacherModel teacherModel;
+  const DeleteStudentFromTeacherEvent({
+    required this.studentModel,
+    required this.teacherModel,
+  });
+}
+
+class AddNewTeacherEvent extends TeacherEvent {
+  final NewTeacherModel teacherModel;
+  const AddNewTeacherEvent({required this.teacherModel});
 }

@@ -1,4 +1,3 @@
-import 'package:fade_out_particle/fade_out_particle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +6,7 @@ import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/config/constants/assets.dart';
 import 'package:manage_finance/config/enums/bloc_status.dart';
-import 'package:manage_finance/features/home/widgets/student_item_widget.dart';
+import 'package:manage_finance/features/home/presentation/widgets/student_item_widget.dart';
 import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:manage_finance/features/teachers/precentation/widgets/add_pupil_for_teacher_bottom_sheet.dart';
@@ -48,7 +47,10 @@ class TeacherDetailPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 18.w),
               itemCount: listItems.length,
               itemBuilder: (context, index) {
-                return StudentItemWidget(studentModel: listItems[index]);
+                return StudentItemWidget(
+                  studentModel: listItems[index],
+                  teacherModel: teacherModel,
+                );
               },
             ),
             // AnimatedList(

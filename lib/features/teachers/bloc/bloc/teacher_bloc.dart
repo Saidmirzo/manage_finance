@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:manage_finance/config/enums/bloc_status.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
+import 'package:manage_finance/features/teachers/data/models/new_teacher_model.dart';
 import 'package:manage_finance/features/teachers/data/models/new_teacher_student_model.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 
@@ -51,12 +52,22 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
       },
     );
     on<AddStudentForTeacherEvent>(
-      (event, emit) async{
+      (event, emit) async {
         for (var element in event.listStudentIds) {
           await dbHelper.addStudentForTeachers(
               teacherId: event.teacherId, studentId: element);
         }
         add(GetTeachersStudents(id: event.teacherId));
+      },
+    );
+    on<DeleteStudentFromTeacherEvent>((event, emit) async {
+      await dbHelper.deleteStudentFromTeacher(event.studentModel);
+      add(GetTeachersStudents(id: event.teacherModel.id!));
+    });
+    on<AddNewTeacherEvent>(
+      (event, emit) async {
+        await dbHelper.addNewTeacher(teacherModel: event.teacherModel);
+        add(GetAllTeachersEvent());
       },
     );
   }

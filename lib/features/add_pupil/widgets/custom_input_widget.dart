@@ -10,10 +10,12 @@ class CustomInputWidget extends StatelessWidget {
     required this.title,
     required this.hintText,
     required this.controller,
+     this.textInputType,
   });
   final String title;
   final String hintText;
   final TextEditingController controller;
+  final TextInputType? textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class CustomInputWidget extends StatelessWidget {
           bgColor: AppColors.white,
           borderColor: AppColors.grey,
           hintText: hintText,
+          textInputType: textInputType,
         ),
       ],
     );

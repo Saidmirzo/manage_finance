@@ -6,7 +6,7 @@ import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/config/constants/assets.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/add_pupil/pages/add_pupil_page.dart';
-import 'package:manage_finance/features/home/pages/home_page.dart';
+import 'package:manage_finance/features/home/presentation/pages/home_page.dart';
 import 'package:manage_finance/features/teachers/precentation/pages/teachers_page.dart';
 import 'package:manage_finance/features/teachers/precentation/widgets/add_teacher_bottom_sheet.dart';
 
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
               isScrollControlled: true,
               context: context,
               builder: (context) {
-                return const AddTeacherBottomSheet();
+                return  AddTeacherBottomSheet();
               },
             );
           },

@@ -23,3 +23,5 @@ class DeleteStudentEvent extends HomeEvent {
   final StudentModel studentModel;
   const DeleteStudentEvent({required this.studentModel});
 }
+
+
