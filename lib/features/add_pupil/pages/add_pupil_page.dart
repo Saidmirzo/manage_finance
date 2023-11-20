@@ -7,6 +7,7 @@ import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/settings/bloc/bloc/settings_bloc.dart';
 
 class AddPupilPage extends StatelessWidget {
   AddPupilPage({super.key});
@@ -51,7 +52,7 @@ class AddPupilPage extends StatelessWidget {
                               payment: 0,
                               paymentDate:
                                   DateTime.now().millisecondsSinceEpoch,
-                              dateId: 2,
+                              dateId: context.read<SettingsBloc>().dateModel!.id??1,
                               addedDate: DateTime.now().millisecondsSinceEpoch,
                             ),
                           ),

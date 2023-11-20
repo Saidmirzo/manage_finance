@@ -39,3 +39,8 @@ class AddNewTeacherEvent extends TeacherEvent {
   final NewTeacherModel teacherModel;
   const AddNewTeacherEvent({required this.teacherModel});
 }
+
+class DeleteTeacherEvent extends TeacherEvent {
+  final TeacherModel teacherModel;
+  const DeleteTeacherEvent({required this.teacherModel});
+}

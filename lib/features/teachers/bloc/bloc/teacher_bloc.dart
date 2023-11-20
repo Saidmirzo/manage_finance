@@ -58,15 +58,23 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
               teacherId: event.teacherId, studentId: element);
         }
         add(GetTeachersStudents(id: event.teacherId));
+        add(GetAllTeachersEvent());
       },
     );
     on<DeleteStudentFromTeacherEvent>((event, emit) async {
       await dbHelper.deleteStudentFromTeacher(event.studentModel);
       add(GetTeachersStudents(id: event.teacherModel.id!));
+      add(GetAllTeachersEvent());
     });
     on<AddNewTeacherEvent>(
       (event, emit) async {
         await dbHelper.addNewTeacher(teacherModel: event.teacherModel);
+        add(GetAllTeachersEvent());
+      },
+    );
+    on<DeleteTeacherEvent>(
+      (event, emit) async {
+        await dbHelper.deleteTeacher(teacherModel: event.teacherModel);
         add(GetAllTeachersEvent());
       },
     );

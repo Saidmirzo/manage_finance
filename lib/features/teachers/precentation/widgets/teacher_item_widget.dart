@@ -5,6 +5,7 @@ import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_decorations.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/core/extantions/number_extantion.dart';
+import 'package:manage_finance/features/home/presentation/widgets/delete_dialog_widget.dart';
 import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:manage_finance/features/teachers/precentation/pages/teacher_detail.dart';
@@ -30,8 +31,22 @@ class TeacherItemWidget extends StatelessWidget {
           ),
         );
       },
+      onLongPress: () {
+        showDialog(
+          context: context,
+          builder: (context) => DeleteDialogWidget(
+            onDelete: () {
+              context.read<TeacherBloc>().add(
+                    DeleteTeacherEvent(teacherModel: teacherModel),
+                  );
+            },
+            name: teacherModel.name,
+          ),
+        );
+      },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+        margin: EdgeInsets.symmetric(vertical: 7.5.h),
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(16.r),
@@ -58,7 +73,9 @@ class TeacherItemWidget extends StatelessWidget {
               ],
             ),
             Text(
-              teacherModel.payment!.floor().format(),
+              teacherModel.payment != null
+                  ? teacherModel.payment!.floor().format()
+                  : 0.format(),
               style: AppTextStyles.body18w5.copyWith(
                 color: AppColors.textColor,
               ),

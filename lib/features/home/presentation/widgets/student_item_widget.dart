@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/core/extantions/number_extantion.dart';
+import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_payment_dialog.dart';
 import 'package:manage_finance/features/home/presentation/widgets/delete_dialog_widget.dart';
@@ -46,10 +47,10 @@ class StudentItemWidget extends StatelessWidget {
               return CustomPaymentDialog(studentModel: studentModel);
             },
           ).then((value) {
-            if(teacherModel!=null) {
+            if (teacherModel != null) {
               context
-                .read<TeacherBloc>()
-                .add(GetTeachersStudents(id: teacherModel!.id!));
+                  .read<TeacherBloc>()
+                  .add(GetTeachersStudents(id: teacherModel!.id!));
             }
           });
         },
@@ -58,8 +59,21 @@ class StudentItemWidget extends StatelessWidget {
             context: context,
             builder: (context) {
               return DeleteDialogWidget(
-                studentModel: studentModel,
-                teacherModel: teacherModel,
+                onDelete: () {
+                  if (teacherModel != null) {
+                    context
+                        .read<TeacherBloc>()
+                        .add(DeleteStudentFromTeacherEvent(
+                          studentModel: studentModel,
+                          teacherModel: teacherModel!,
+                        ));
+                  } else {
+                    context.read<HomeBloc>().add(
+                          DeleteStudentEvent(studentModel: studentModel),
+                        );
+                  }
+                },
+                name: studentModel.name,
               );
             },
           );

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/main/main_page.dart';
+import 'package:manage_finance/features/settings/bloc/bloc/settings_bloc.dart';
 import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/injection_container.dart';
 import 'injection_container.dart' as di;
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         providers:[
           BlocProvider(create:  (context) => sl<HomeBloc>()),
           BlocProvider(create:  (context) => sl<TeacherBloc>()),
+          BlocProvider(create:  (context) => sl<SettingsBloc>()),
         ],
         child: MaterialApp(
           title: 'Finance',

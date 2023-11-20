@@ -7,7 +7,9 @@ sealed class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllStudentsEvent extends HomeEvent {}
+class GetAllStudentsEvent extends HomeEvent {
+  
+}
 
 class SetPaymentEvent extends HomeEvent {
   final StudentModel studentModel;
@@ -23,5 +25,3 @@ class DeleteStudentEvent extends HomeEvent {
   final StudentModel studentModel;
   const DeleteStudentEvent({required this.studentModel});
 }
-
-

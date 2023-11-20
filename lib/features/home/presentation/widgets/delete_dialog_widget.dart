@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
-import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
-import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
-import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
-import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 
 class DeleteDialogWidget extends StatelessWidget {
   const DeleteDialogWidget({
     super.key,
-    required this.studentModel,
-    this.teacherModel,
+    required this.onDelete,
+    required this.name,
   });
 
-  final StudentModel studentModel;
-  final TeacherModel? teacherModel;
+  final Function onDelete;
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +28,7 @@ class DeleteDialogWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              "${studentModel.name ?? "Unknown"}ni",
+              "${name ?? "Unknown"}ni",
               style: AppTextStyles.body18w4,
             ),
             Text(
@@ -61,18 +56,7 @@ class DeleteDialogWidget extends StatelessWidget {
                   textStyle:
                       AppTextStyles.body16w5.copyWith(color: AppColors.white),
                   onTap: () {
-                    if ( teacherModel != null) {
-                      context
-                          .read<TeacherBloc>()
-                          .add(DeleteStudentFromTeacherEvent(
-                            studentModel: studentModel,
-                            teacherModel: teacherModel!,
-                          ));
-                    } else {
-                      context.read<HomeBloc>().add(
-                            DeleteStudentEvent(studentModel: studentModel),
-                          );
-                    }
+                    onDelete();
 
                     Navigator.pop(context);
                   },

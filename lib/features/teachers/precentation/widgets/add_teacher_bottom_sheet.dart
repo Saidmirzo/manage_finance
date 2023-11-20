@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
+import 'package:manage_finance/features/settings/bloc/bloc/settings_bloc.dart';
 import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/features/teachers/data/models/new_teacher_model.dart';
 import 'package:manage_finance/features/teachers/precentation/widgets/custom_bottom_sheet_devider.dart';
+
 class AddTeacherBottomSheet extends StatefulWidget {
-  AddTeacherBottomSheet({
+  const AddTeacherBottomSheet({
     super.key,
   });
 
@@ -65,12 +67,13 @@ class _AddTeacherBottomSheetState extends State<AddTeacherBottomSheet> {
                 context.read<TeacherBloc>().add(
                       AddNewTeacherEvent(
                           teacherModel: NewTeacherModel(
-                        dateId: 2,
+                        dateId: context.read<SettingsBloc>().dateModel!.id??1,
                         fees: int.parse(fees.text),
                         name: name.text,
                         subjectName: subject.text,
                       )),
                     );
+                Navigator.pop(context);
               }
             },
           )

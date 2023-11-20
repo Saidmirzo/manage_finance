@@ -1,5 +1,6 @@
 import 'package:bottom_bar/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
@@ -7,8 +8,11 @@ import 'package:manage_finance/config/constants/assets.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/add_pupil/pages/add_pupil_page.dart';
 import 'package:manage_finance/features/home/presentation/pages/home_page.dart';
+import 'package:manage_finance/features/settings/bloc/bloc/settings_bloc.dart';
+import 'package:manage_finance/features/settings/pages/settings_page.dart';
 import 'package:manage_finance/features/teachers/precentation/pages/teachers_page.dart';
 import 'package:manage_finance/features/teachers/precentation/widgets/add_teacher_bottom_sheet.dart';
+import 'package:manage_finance/injection_container.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -19,12 +23,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   late final PageController pageController;
-  DBHelper dbHelper = DBHelper();
   int activeIndex = 0;
   @override
   void initState() {
     super.initState();
-    dbHelper.init();
+    sl<DBHelper>().init().then((value) {
+      context.read<SettingsBloc>().add(GetAllDateEvent());
+    });
     pageController = PageController();
     pageController.addListener(() {
       setState(() {
@@ -38,30 +43,41 @@ class _MainPageState extends State<MainPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
-        body: PageView(
-          controller: pageController,
-          children:  [
-            const HomePage(),
-            AddPupilPage(),
-            const TeachersPage(),
-            const HomePage(),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            dbHelper.getTEachers();
-            showModalBottomSheet(
-              isScrollControlled: true,
-              context: context,
-              builder: (context) {
-                return  AddTeacherBottomSheet();
-              },
-            );
+        body: BlocBuilder<SettingsBloc, SettingsState>(
+          builder: (context, state) {
+            if (state is SettingsLoadedState) {
+              return PageView(
+                controller: pageController,
+                children: [
+                  const HomePage(),
+                  AddPupilPage(),
+                  const TeachersPage(),
+                  const SettingsPage(),
+                ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           },
-          backgroundColor: AppColors.black,
-          shape: const CircleBorder(),
-          child: SvgPicture.asset(Assets.icons.add),
         ),
+        floatingActionButton: activeIndex == 0 || activeIndex == 2
+            ? FloatingActionButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return const AddTeacherBottomSheet();
+                    },
+                  );
+                },
+                backgroundColor: AppColors.black,
+                shape: const CircleBorder(),
+                child: SvgPicture.asset(Assets.icons.add),
+              )
+            : null,
         bottomNavigationBar: BottomBar(
           backgroundColor: AppColors.white,
           height: 90,
