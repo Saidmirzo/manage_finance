@@ -23,8 +23,11 @@ class DBHelper {
   final String tableDeletedStudens = 'deleted_students';
   final String tableDate = 'date';
   int dateId = 1;
+  int lastDateId = 1;
+
   void restartDateId({required int dateID}) {
     dateId = dateID;
+    
   }
 
   // opens the database (and creates if it do not exist)
@@ -250,25 +253,28 @@ class DBHelper {
   Future<void> createNewMonth(DateModel dateModel, DateModel lastModel) async {
     try {
       if (database.isOpen) {
+        lastDateId++;
         await database.insert(tableDate, dateModel.toJson());
         await database.rawInsert(
           '''INSERT INTO student(name, payment, days, date_id, payment_date, added_date)
-                 SELECT name, 0 as payment, 30 as days, 3 as date_id, 
+                 SELECT name, 0 as payment, 30 as days,$lastDateId  as date_id, 
                     added_date as payment_date, added_date 
                     FROM student 
                   WHERE date_id==${lastModel.id}''',
         );
         await database.rawInsert(
           '''INSERT INTO teacher(name, subject_name, date_id, fees) 
-                  SELECT name, subject_name, 3 as  date_id, fees 
+                  SELECT name, subject_name, $lastDateId as  date_id, fees 
                   from teacher 
                   WHERE date_id==${lastModel.id};''',
         );
         await database.rawInsert(
           '''INSERT into teacher_student(teacher_id, student_id, date_id)
-                  SELECT teacher_id, student_id, 3 AS date_id 
+                  SELECT teacher_id, student_id, $lastDateId AS date_id 
                   from teacher_student WHERE date_id==${lastModel.id};''',
         );
+        final result = await database.rawQuery("Select * from teacher_student");
+        log(result.toString());
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());
@@ -281,6 +287,7 @@ class DBHelper {
         final response = await database.rawQuery("SELECT * FROM date");
         List<DateModel> list =
             response.map((e) => DateModel.fromJson(e)).toList();
+        lastDateId = list.last.id ?? 1;
         return list;
       }
     } catch (e) {

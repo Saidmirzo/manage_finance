@@ -35,16 +35,19 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomTextField(
-                controller: TextEditingController(),
-                width: 265.w,
-                leading: Icon(
-                  Icons.search,
-                  color: AppColors.white,
+              SizedBox(
+                height: 60.h,
+                child: CustomTextField(
+                  controller: TextEditingController(),
+                  width: 265.w,
+                  leading: Icon(
+                    Icons.search,
+                    color: AppColors.white,
+                  ),
+                  hintText: 'Search...',
+                  hintStyle:
+                      AppTextStyles.body16w4.copyWith(color: AppColors.white),
                 ),
-                hintText: 'Search...',
-                hintStyle:
-                    AppTextStyles.body16w4.copyWith(color: AppColors.white),
               ),
               CustomBackButton(
                 onTap: () {},
@@ -55,8 +58,8 @@ class _HomePageState extends State<HomePage> {
         ),
         BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            if (state.statusGetAllStudents==BlocStatus.completed) {
-              final list = state.listStudents??[];
+            if (state.statusGetAllStudents == BlocStatus.completed) {
+              final list = state.listStudents ?? [];
               return Expanded(
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 18.w),

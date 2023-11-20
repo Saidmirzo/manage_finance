@@ -35,8 +35,9 @@ class _SettingsPageState extends State<SettingsPage> {
           child: BlocBuilder<SettingsBloc, SettingsState>(
             builder: (context, state) {
               if (state is SettingsLoadedState) {
-                final list = context.read<SettingsBloc>().listDates ?? [];
-                list.reversed;
+                List<DateModel> list =
+                    context.read<SettingsBloc>().listDates ?? [];
+                list = list.reversed.toList();
                 return ListView.builder(
                   itemCount: list.length,
                   padding: EdgeInsets.symmetric(horizontal: 18.w),

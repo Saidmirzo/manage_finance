@@ -32,10 +32,20 @@ class DateItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.r),
           boxShadow: [AppDecorations.defBoxShadow],
         ),
-        child: Text(
-          DateFormat("MMMM")
-              .format(DateTime.fromMillisecondsSinceEpoch(dateModel.date!)),
-          style: AppTextStyles.body24w4,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              DateFormat("MMMM")
+                  .format(DateTime.fromMillisecondsSinceEpoch(dateModel.date!)),
+              style: AppTextStyles.body24w4,
+            ),
+            Text(
+              DateFormat("hh:mm")
+                  .format(DateTime.fromMillisecondsSinceEpoch(dateModel.date!)),
+              style: AppTextStyles.body24w4,
+            ),
+          ],
         ),
       ),
     );

@@ -52,7 +52,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.width,
-      height: widget.height ?? 48.h,
+      // height: widget.height ?? 48.h,
       alignment: Alignment.center,
       margin: widget.margin,
       padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -76,19 +76,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
         cursorColor: AppColors.black,
         cursorHeight: 25,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(1),
+          contentPadding: const EdgeInsets.all(0),
           icon: widget.leading,
           hintText: widget.hintText,
           hintStyle: widget.hintStyle ??
               AppTextStyles.body14w5.copyWith(
                 color: AppColors.grey,
               ),
-          border: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.white),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.white),
-          ),
+          border: InputBorder.none,
+          // focusedBorder: OutlineInputBorder(
+          //   borderSide: BorderSide(color: AppColors.white),
+          // ),
           suffixIcon: widget.isPassword == true
               ? IconButton(
                   icon: Icon(

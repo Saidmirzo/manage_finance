@@ -47,7 +47,7 @@ class CustomPaymentDialog extends StatelessWidget {
               children: [
                 Text(
                   studentModel.name ?? "Unknown",
-                  style: AppTextStyles.body14w4,
+                  style: AppTextStyles.body16w4,
                 ),
                 CustomTextField(
                   width: 120.w,
@@ -55,10 +55,8 @@ class CustomPaymentDialog extends StatelessWidget {
                   controller: days,
                   bgColor: AppColors.white,
                   boxShadow: AppDecorations.defBoxShadow,
+                  textInputType: TextInputType.number,
                   hintText: '30 kun',
-                  hintStyle: AppTextStyles.body12w4.copyWith(
-                    color: AppColors.grey,
-                  ),
                 ),
                 CustomTextField(
                   // height: 46.h,

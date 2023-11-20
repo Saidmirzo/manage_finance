@@ -65,13 +65,17 @@ class _MainPageState extends State<MainPage> {
         floatingActionButton: activeIndex == 0 || activeIndex == 2
             ? FloatingActionButton(
                 onPressed: () {
-                  showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (context) {
-                      return const AddTeacherBottomSheet();
-                    },
-                  );
+                  if (activeIndex == 0) {
+                    pageController.jumpToPage(1);
+                  } else {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) {
+                        return const AddTeacherBottomSheet();
+                      },
+                    );
+                  }
                 },
                 backgroundColor: AppColors.black,
                 shape: const CircleBorder(),
