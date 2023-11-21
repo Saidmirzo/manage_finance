@@ -1,9 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/services.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/settings/models/date_model.dart';
-import 'package:manage_finance/injection_container.dart';
 
 part 'settings_event.dart';
 part 'settings_state.dart';

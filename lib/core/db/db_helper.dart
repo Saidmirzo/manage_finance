@@ -27,8 +27,14 @@ class DBHelper {
 
   void restartDateId({required int dateID}) {
     dateId = dateID;
-    
   }
+
+  final String request = '''SELECT student.name, student.date_id, sum(teacher.fees) from student
+LEFT JOIN teacher_student on student.id==teacher_student.student_id and student.date_id==teacher_student.date_id
+LEFT JOIN teacher on teacher.id==teacher_student.teacher_id and teacher.date_id==teacher_student.date_id
+WHERE student.date_id==1
+GROUP BY student.id, student.name
+''';
 
   // opens the database (and creates if it do not exist)
   Future<void> init() async {
@@ -61,7 +67,11 @@ class DBHelper {
     try {
       if (database.isOpen) {
         final response = await database.rawQuery(
-          '''SELECT * FROM student where date_id==$dateId''',
+          '''SELECT student.id, student.name,student.payment, student.days, student.payment_date, student.added_date, student.date_id, (sum(teacher.fees)+500000) AS fixedPayment from student
+              LEFT JOIN teacher_student on student.id==teacher_student.student_id and student.date_id==teacher_student.date_id
+              LEFT JOIN teacher on teacher.id==teacher_student.teacher_id and teacher.date_id==teacher_student.date_id
+              WHERE student.date_id==$dateId
+              GROUP BY student.id, student.name''',
         );
         final listStudents = List<StudentModel>.from(response.map((e) {
           return StudentModel.fromJson(e);
@@ -268,11 +278,11 @@ class DBHelper {
                   from teacher 
                   WHERE date_id==${lastModel.id};''',
         );
-        await database.rawInsert(
-          '''INSERT into teacher_student(teacher_id, student_id, date_id)
-                  SELECT teacher_id, student_id, $lastDateId AS date_id 
-                  from teacher_student WHERE date_id==${lastModel.id};''',
-        );
+        // await database.rawInsert(
+        //   '''INSERT into teacher_student(teacher_id, student_id, date_id)
+        //           SELECT teacher_id, student_id, $lastDateId AS date_id
+        //           from teacher_student WHERE date_id==${lastModel.id};''',
+        // );
         final result = await database.rawQuery("Select * from teacher_student");
         log(result.toString());
       }

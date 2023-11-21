@@ -4,6 +4,7 @@ class StudentModel {
   int? payment;
   int? paymentDate;
   int? days;
+  int? fixedPayment;
   int? dateId;
   int? addedDate;
 
@@ -13,6 +14,7 @@ class StudentModel {
       this.payment,
       this.paymentDate,
       this.days,
+      this.fixedPayment,
       this.dateId,
       this.addedDate});
 
@@ -22,6 +24,7 @@ class StudentModel {
     payment = json['payment'];
     paymentDate = json['payment_date'];
     days = json['days'];
+    fixedPayment = json['fixedPayment'];
     dateId = json['date_id'];
     addedDate = json['added_date'];
   }
@@ -33,6 +36,7 @@ class StudentModel {
     data['payment'] = this.payment;
     data['payment_date'] = this.paymentDate;
     data['days'] = this.days;
+    data['fixedPayment'] = this.fixedPayment;
     data['date_id'] = this.dateId;
     data['added_date'] = this.addedDate;
     if (isDeleted ?? false) {

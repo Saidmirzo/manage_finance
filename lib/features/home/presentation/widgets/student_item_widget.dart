@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
-import 'package:manage_finance/core/extantions/number_extantion.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_payment_dialog.dart';
@@ -23,7 +22,8 @@ class StudentItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isActive = studentModel.payment == 1000000;
+    final bool isActive =
+        studentModel.payment! >= (studentModel.fixedPayment ?? 500000);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 7.5.h),
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
@@ -102,8 +102,8 @@ class StudentItemWidget extends StatelessWidget {
                       .toString(),
                   style: AppTextStyles.body12w5.copyWith(color: AppColors.grey),
                 ),
-                Text(studentModel.payment!.format(),
-                    style: AppTextStyles.body12w5)
+                Text("${studentModel.payment!} / ${studentModel.fixedPayment??500000}",
+                    style: AppTextStyles.body14w7),
               ],
             )
           ],

@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 18.w),
                   children: [
-                    const ProgressBar(),
+                     ProgressBar(listStudents: list),
                     ...List.generate(
                       list.length,
                       (index) => StudentItemWidget(studentModel: list[index]),
