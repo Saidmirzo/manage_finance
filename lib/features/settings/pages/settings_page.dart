@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:manage_finance/config/constants/app_colors.dart';
 import 'package:manage_finance/config/constants/app_text_styles.dart';
+import 'package:manage_finance/features/add_pupil/widgets/custom_input_widget.dart';
 import 'package:manage_finance/features/home/bloc/bloc/home_bloc.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
@@ -20,6 +21,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   int activeIndex = 0;
+  final TextEditingController flatAndFoodPrice = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,23 @@ class _SettingsPageState extends State<SettingsPage> {
           child: Text(
             'Settings',
             style: AppTextStyles.body20w5,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 18.w),
+          child: Column(
+            children: [
+              CustomInputWidget(
+                title: 'Yotoxona va oziq-ovqat summasi:',
+                hintText: 'Summani kiriting...',
+                controller: flatAndFoodPrice,
+                textInputType: TextInputType.number,
+              ),
+              CustomTextButton(
+                text: 'Saqlash',
+                onTap: () {},
+              ),
+            ],
           ),
         ),
         Expanded(
