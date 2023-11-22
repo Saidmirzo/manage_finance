@@ -11,6 +11,7 @@ part 'home_bloc.freezed.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final DBHelper dbHelper;
+  List<StudentModel> listStudents = [];
   HomeBloc(this.dbHelper) : super(const HomeState()) {
     on<HomeEvent>((event, emit) async {});
 
@@ -18,6 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (event, emit) async {
         emit(state.copyWith(statusGetAllStudents: BlocStatus.inProgress));
         final response = await dbHelper.getStudents();
+        listStudents = response;
         emit(
           state.copyWith(
             statusGetAllStudents: BlocStatus.completed,
@@ -46,6 +48,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         add(GetAllStudentsEvent());
       },
     );
-    
+    on<SearchStudenEvent>((event, emit) {
+      emit(state.copyWith(statusGetAllStudents: BlocStatus.inProgress));
+      List<StudentModel> list = [];
+      for (var element in listStudents) {
+        if (element.name!.toLowerCase().contains(event.text.toLowerCase())) {
+          list.add(element);
+        }
+      }
+      emit(
+        state.copyWith(
+          statusGetAllStudents: BlocStatus.completed,
+          listStudents: list,
+        ),
+      );
+    });
   }
 }

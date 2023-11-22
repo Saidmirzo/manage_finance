@@ -44,6 +44,11 @@ class _HomePageState extends State<HomePage> {
                     Icons.search,
                     color: AppColors.white,
                   ),
+                  onChanged: (value) {
+                    context
+                        .read<HomeBloc>()
+                        .add(SearchStudenEvent(text: value));
+                  },
                   hintText: 'Search...',
                   hintStyle:
                       AppTextStyles.body16w4.copyWith(color: AppColors.white),
@@ -64,7 +69,8 @@ class _HomePageState extends State<HomePage> {
                 child: ListView(
                   padding: EdgeInsets.symmetric(horizontal: 18.w),
                   children: [
-                     ProgressBar(listStudents: list),
+                    ProgressBar(
+                        listStudents: context.read<HomeBloc>().listStudents),
                     ...List.generate(
                       list.length,
                       (index) => StudentItemWidget(studentModel: list[index]),

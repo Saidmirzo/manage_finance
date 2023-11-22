@@ -33,23 +33,23 @@ class _SettingsPageState extends State<SettingsPage> {
             style: AppTextStyles.body20w5,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.w),
-          child: Column(
-            children: [
-              CustomInputWidget(
-                title: 'Yotoxona va oziq-ovqat summasi:',
-                hintText: 'Summani kiriting...',
-                controller: flatAndFoodPrice,
-                textInputType: TextInputType.number,
-              ),
-              CustomTextButton(
-                text: 'Saqlash',
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 18.w),
+        //   child: Column(
+        //     children: [
+        //       CustomInputWidget(
+        //         title: 'Yotoxona va oziq-ovqat summasi:',
+        //         hintText: 'Summani kiriting...',
+        //         controller: flatAndFoodPrice,
+        //         textInputType: TextInputType.number,
+        //       ),
+        //       CustomTextButton(
+        //         text: 'Saqlash',
+        //         onTap: () {},
+        //       ),
+        //     ],
+        //   ),
+        // ),
         Expanded(
           child: BlocBuilder<SettingsBloc, SettingsState>(
             builder: (context, state) {
@@ -85,6 +85,9 @@ class _SettingsPageState extends State<SettingsPage> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 18.w),
           child: CustomTextButton(
+            textStyle: AppTextStyles.body18w5.copyWith(
+              color: AppColors.white,
+            ),
             text: "Yangi oy uchun baza yaratish",
             onTap: () {
               DateTime now = DateTime.now();
