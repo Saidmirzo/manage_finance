@@ -11,7 +11,6 @@ import 'package:manage_finance/features/home/presentation/widgets/progress_bar.d
 import 'package:manage_finance/features/home/presentation/widgets/student_item_widget.dart';
 import 'package:manage_finance/features/main/widgets/custom_back_button.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
-import 'package:manage_finance/features/settings/bloc/bloc/settings_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

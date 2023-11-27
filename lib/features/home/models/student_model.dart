@@ -36,7 +36,6 @@ class StudentModel {
     data['payment'] = this.payment;
     data['payment_date'] = this.paymentDate;
     data['days'] = this.days;
-    data['fixedPayment'] = this.fixedPayment;
     data['date_id'] = this.dateId;
     data['added_date'] = this.addedDate;
     if (isDeleted ?? false) {
