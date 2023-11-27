@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:manage_finance/config/enums/bloc_status.dart';
+import 'package:manage_finance/config/enums/sort_status.dart';
 import 'package:manage_finance/core/db/db_helper.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -18,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetAllStudentsEvent>(
       (event, emit) async {
         emit(state.copyWith(statusGetAllStudents: BlocStatus.inProgress));
-        final response = await dbHelper.getStudents();
+        final response = await dbHelper.getStudents(sortStatus: event.sortStatus);
         listStudents = response;
         emit(
           state.copyWith(

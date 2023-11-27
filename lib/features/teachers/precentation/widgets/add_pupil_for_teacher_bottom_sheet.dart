@@ -6,6 +6,7 @@ import 'package:manage_finance/config/constants/app_text_styles.dart';
 import 'package:manage_finance/config/enums/bloc_status.dart';
 import 'package:manage_finance/features/home/presentation/widgets/custom_text_button.dart';
 import 'package:manage_finance/features/main/widgets/custom_textfield.dart';
+import 'package:manage_finance/features/settings/bloc/bloc/settings_bloc.dart';
 import 'package:manage_finance/features/teachers/bloc/bloc/teacher_bloc.dart';
 import 'package:manage_finance/features/teachers/data/models/teacher_model.dart';
 import 'package:manage_finance/features/teachers/precentation/widgets/custom_bottom_sheet_devider.dart';
@@ -26,6 +27,7 @@ class AddPupilForTeacherBottomSheet extends StatefulWidget {
 class _AddPupilForTeacherBottomSheetState
     extends State<AddPupilForTeacherBottomSheet> {
   List<int> selectedItems = [];
+  final TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,12 @@ class _AddPupilForTeacherBottomSheetState
                   children: [
                     const CustomBottomSheetDevider(),
                     CustomTextField(
-                      controller: TextEditingController(),
+                      onChanged: (value) {
+                        context
+                            .read<TeacherBloc>()
+                            .add(SearchNewStudentsEvent(text: search.text));
+                      },
+                      controller: search,
                       margin: EdgeInsets.symmetric(horizontal: 18.w),
                       leading: Icon(
                         Icons.search,
@@ -86,7 +93,7 @@ class _AddPupilForTeacherBottomSheetState
                   child: Container(
                     height: 180.h,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+                        EdgeInsets.symmetric(horizontal: 18.w, vertical: 20.h),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: AppColors.gradientColors,
@@ -98,7 +105,6 @@ class _AddPupilForTeacherBottomSheetState
                     child: CustomTextButton(
                       text: "Qo'shish",
                       onTap: () {
-                        
                         context.read<TeacherBloc>().add(
                               AddStudentForTeacherEvent(
                                 listStudentIds: selectedItems,

@@ -7,7 +7,10 @@ sealed class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetAllStudentsEvent extends HomeEvent {}
+class GetAllStudentsEvent extends HomeEvent {
+  final SortStatus? sortStatus;
+  const GetAllStudentsEvent({ this.sortStatus});
+}
 
 class SetPaymentEvent extends HomeEvent {
   final StudentModel studentModel;
@@ -28,3 +31,4 @@ class SearchStudenEvent extends HomeEvent {
   final String text;
   const SearchStudenEvent({required this.text});
 }
+

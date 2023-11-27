@@ -44,3 +44,8 @@ class DeleteTeacherEvent extends TeacherEvent {
   final TeacherModel teacherModel;
   const DeleteTeacherEvent({required this.teacherModel});
 }
+
+class SearchNewStudentsEvent extends TeacherEvent {
+  final String text;
+  const SearchNewStudentsEvent({required this.text});
+}

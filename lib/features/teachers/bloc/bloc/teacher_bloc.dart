@@ -16,6 +16,7 @@ part 'teacher_bloc.freezed.dart';
 
 class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
   final DBHelper dbHelper;
+  List<NewStudentModel> listNewStudents = [];
   TeacherBloc(this.dbHelper) : super(const TeacherState()) {
     on<TeacherEvent>((event, emit) {});
     on<GetAllTeachersEvent>(
@@ -43,6 +44,7 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
       (event, emit) async {
         emit(state.copyWith(statusNewTeachersStudents: BlocStatus.inProgress));
         final result = await dbHelper.getNewTeachersStudents(id: event.id);
+        listNewStudents = result;
         emit(
           state.copyWith(
             statusNewTeachersStudents: BlocStatus.completed,
@@ -51,6 +53,21 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
         );
       },
     );
+    on<SearchNewStudentsEvent>((event, emit) {
+      emit(state.copyWith(statusNewTeachersStudents: BlocStatus.inProgress));
+      List<NewStudentModel> result = [];
+      for (var element in listNewStudents) {
+        if (element.name!.toLowerCase().contains(event.text.toLowerCase())) {
+          result.add(element);
+        }
+      }
+      emit(
+        state.copyWith(
+          statusNewTeachersStudents: BlocStatus.completed,
+          listNewStudents: result,
+        ),
+      );
+    });
     on<AddStudentForTeacherEvent>(
       (event, emit) async {
         for (var element in event.listStudentIds) {

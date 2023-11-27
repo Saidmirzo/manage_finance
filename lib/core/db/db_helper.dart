@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:manage_finance/config/enums/bloc_status.dart';
+import 'package:manage_finance/config/enums/sort_status.dart';
 import 'package:manage_finance/features/home/models/student_model.dart';
 import 'package:manage_finance/features/settings/models/date_model.dart';
 import 'package:manage_finance/features/teachers/data/models/new_teacher_model.dart';
@@ -29,7 +31,8 @@ class DBHelper {
     dateId = dateID;
   }
 
-  final String request = '''SELECT student.name, student.date_id, sum(teacher.fees) from student
+  final String request =
+      '''SELECT student.name, student.date_id, sum(teacher.fees) from student
 LEFT JOIN teacher_student on student.id==teacher_student.student_id and student.date_id==teacher_student.date_id
 LEFT JOIN teacher on teacher.id==teacher_student.teacher_id and teacher.date_id==teacher_student.date_id
 WHERE student.date_id==1
@@ -62,7 +65,8 @@ GROUP BY student.id, student.name
     );
   }
 
-  Future<List<StudentModel>> getStudents() async {
+  Future<List<StudentModel>> getStudents(
+      {SortStatus? sortStatus}) async {
     log(dateId.toString());
     try {
       if (database.isOpen) {
@@ -71,7 +75,8 @@ GROUP BY student.id, student.name
               LEFT JOIN teacher_student on student.id==teacher_student.student_id and student.date_id==teacher_student.date_id
               LEFT JOIN teacher on teacher.id==teacher_student.teacher_id and teacher.date_id==teacher_student.date_id
               WHERE student.date_id==$dateId
-              GROUP BY student.id, student.name''',
+              GROUP BY student.id, student.name
+              ORDER by  ${getStatusSort(sortStatus?? SortStatus.name)}''',
         );
         final listStudents = List<StudentModel>.from(response.map((e) {
           return StudentModel.fromJson(e);
@@ -83,6 +88,21 @@ GROUP BY student.id, student.name
     }
 
     return [];
+  }
+
+  String getStatusSort(SortStatus status) {
+    switch (status) {
+      case SortStatus.name:
+        return 'student.name';
+      case SortStatus.nameDesc:
+        return 'student.name desc';
+      case SortStatus.payment:
+        return 'student.payment';
+      case SortStatus.paymentDesc:
+        return 'student.payment desc';
+      default:
+        return 'student.name';
+    }
   }
 
   Future<void> addNewTeacher({required NewTeacherModel teacherModel}) async {
