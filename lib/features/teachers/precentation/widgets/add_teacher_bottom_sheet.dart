@@ -67,7 +67,6 @@ class _AddTeacherBottomSheetState extends State<AddTeacherBottomSheet> {
                 context.read<TeacherBloc>().add(
                       AddNewTeacherEvent(
                           teacherModel: NewTeacherModel(
-                        dateId: context.read<SettingsBloc>().dateModel!.id??1,
                         fees: int.parse(fees.text),
                         name: name.text,
                         subjectName: subject.text,

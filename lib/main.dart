@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +13,7 @@ import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await  di.init();
+  await di.init();
 
   runApp(const MyApp());
 }
@@ -21,15 +23,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(DateTime.now().millisecondsSinceEpoch.toString());
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       splitScreenMode: true,
       minTextAdapt: true,
       child: MultiBlocProvider(
-        providers:[
-          BlocProvider(create:  (context) => sl<HomeBloc>()),
-          BlocProvider(create:  (context) => sl<TeacherBloc>()),
-          BlocProvider(create:  (context) => sl<SettingsBloc>()),
+        providers: [
+          BlocProvider(create: (context) => sl<HomeBloc>()),
+          BlocProvider(create: (context) => sl<TeacherBloc>()),
+          BlocProvider(create: (context) => sl<SettingsBloc>()),
         ],
         child: MaterialApp(
           title: 'Finance',

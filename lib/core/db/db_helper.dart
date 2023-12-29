@@ -65,19 +65,21 @@ GROUP BY student.id, student.name
     );
   }
 
-  Future<List<StudentModel>> getStudents(
-      {SortStatus? sortStatus}) async {
+  Future<List<StudentModel>> getStudents({SortStatus? sortStatus}) async {
     log(dateId.toString());
     try {
       if (database.isOpen) {
         final response = await database.rawQuery(
-          '''SELECT student.id, student.name,student.payment, student.days, student.payment_date, student.added_date, student.date_id, (sum(teacher.fees)+500000) AS fixedPayment from student
-              LEFT JOIN teacher_student on student.id==teacher_student.student_id and student.date_id==teacher_student.date_id
-              LEFT JOIN teacher on teacher.id==teacher_student.teacher_id and teacher.date_id==teacher_student.date_id
-              WHERE student.date_id==$dateId
-              GROUP BY student.id, student.name
-              ORDER by  ${getStatusSort(sortStatus?? SortStatus.name)}''',
-        );
+            '''SELECT student.id, student.name, payment.payment, 
+                payment.payment_date, payment.days, payment.date_id, student.added_date from  student 
+                RIGHT JOIN payment on payment.student_id==student.id WHERE payment.date_id==1;'''
+            // '''SELECT student.id, student.name,student.payment, student.days, student.payment_date, student.added_date, student.date_id, (sum(teacher.fees)+500000) AS fixedPayment from student
+            //     LEFT JOIN teacher_student on student.id==teacher_student.student_id and student.date_id==teacher_student.date_id
+            //     LEFT JOIN teacher on teacher.id==teacher_student.teacher_id and teacher.date_id==teacher_student.date_id
+            //     WHERE student.date_id==$dateId
+            //     GROUP BY student.id, student.name
+            //     ORDER by  ${getStatusSort(sortStatus?? SortStatus.name)}''',
+            );
         final listStudents = List<StudentModel>.from(response.map((e) {
           return StudentModel.fromJson(e);
         }));
@@ -113,7 +115,6 @@ GROUP BY student.id, student.name
           teacherModel.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
-        log("added teacher Id: ${teacherModel.dateId}");
       }
     } catch (e) {
       log("getSpeakingViewList", error: e.toString());
@@ -137,20 +138,35 @@ GROUP BY student.id, student.name
       if (database.isOpen) {
         log("dateID: $dateId");
         final response = await database.rawQuery(
-          '''SELECT
+         ''' SELECT
                 teacher.id,
                 teacher.subject_name,
                 teacher.name,
                 teacher.fees,
                 COUNT(student.id) AS pupils,
-                sum((student.days/30.0 )*teacher.fees )as payment
+                sum((payment.days/30.0 )*teacher.fees )as payment
             FROM
                 teacher
-            LEFT JOIN teacher_student ON teacher.id = teacher_student.teacher_id AND teacher.date_id==teacher_student.date_id
-            LEFT JOIN student ON teacher_student.student_id = student.id AND teacher_student.date_id==student.date_id
-            WHERE teacher.date_id==$dateId
+            LEFT JOIN teacher_student ON teacher.id = teacher_student.teacher_id 
+            LEFT JOIN student ON teacher_student.student_id = student.id 
+            LEFT JOIN payment on payment.student_id==student.id
+            WHERE payment.date_id==1
             GROUP BY
-                teacher.id, teacher.name;''',
+                teacher.id, teacher.name;'''
+          // '''SELECT
+          //       teacher.id,
+          //       teacher.subject_name,
+          //       teacher.name,
+          //       teacher.fees,
+          //       COUNT(student.id) AS pupils,
+          //       sum((student.days/30.0 )*teacher.fees )as payment
+          //   FROM
+          //       teacher
+          //   LEFT JOIN teacher_student ON teacher.id = teacher_student.teacher_id AND teacher.date_id==teacher_student.date_id
+          //   LEFT JOIN student ON teacher_student.student_id = student.id AND teacher_student.date_id==student.date_id
+          //   WHERE teacher.date_id==$dateId
+          //   GROUP BY
+          //       teacher.id, teacher.name;''',
         );
         final listTeachers = List<TeacherModel>.from(response.map((e) {
           return TeacherModel.fromJson(e);
