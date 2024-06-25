@@ -21,7 +21,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin {
   late final PageController pageController;
   int activeIndex = 0;
   @override
@@ -40,6 +40,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.bgColor,
@@ -147,4 +148,7 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+  
+  @override
+  bool get wantKeepAlive => false;
 }
